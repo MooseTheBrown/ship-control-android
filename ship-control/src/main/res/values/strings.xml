@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Ship Control</string>
+    <string name="connecting">Connecting to server</string>
+    <string name="curDataHeaderValue">Current ship readings</string>
+    <string name="speedCaptionValue">speed:</string>
+    <string name="steeringCaptionValue">steering:</string>
+    <string name="controlsCaptionValue">Controls</string>
+    <string name="speedUpButtonDescr">speed up</string>
+    <string name="speedDownButtonDescr">speed down</string>
+    <string name="curShipCaptionValue">Current ship:</string>
+    <string name="turnLeftButtonDescr">turn left</string>
+    <string name="turnRightButtonDescr">turn_right</string>
+    <string name="connectionFailed">Failed to connect</string>
+    <string name="Connecting">Connecting...</string>
+    <string name="selectShip">Select ship</string>
+    <string name="brokerURIKey">MQTT broker URI</string>
+    <string name="queryTimeoutKey">Ship query timeout (ms)</string>
+    <string name="settingsTitle">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:id="@+id/brokerURI"
+        android:key="brokerURI"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/brokerURIKey" />
+    <EditTextPreference
+        android:id="@+id/queryTimeout"
+        android:defaultValue="1000"
+        android:key="queryTimeout"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/queryTimeoutKey" />
+</PreferenceScreen>
