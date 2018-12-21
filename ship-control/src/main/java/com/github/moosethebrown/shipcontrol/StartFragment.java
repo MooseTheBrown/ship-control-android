@@ -6,6 +6,9 @@ import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -19,7 +22,7 @@ import com.github.moosethebrown.shipcontrol.data.ShipViewModel;
  */
 public class StartFragment extends Fragment {
 
-    OnConnectedListener listener;
+    Listener listener;
     ConnectionSettingsProvider connSettingsProvider;
 
     public StartFragment() {
@@ -34,6 +37,7 @@ public class StartFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_start, container, false);
     }
@@ -71,11 +75,11 @@ public class StartFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnConnectedListener) {
-            listener = (OnConnectedListener) context;
+        if (context instanceof Listener) {
+            listener = (Listener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnConnectedListener");
+                    + " must implement StartFragment.Listener");
         }
 
         if (context instanceof ConnectionSettingsProvider) {
@@ -92,8 +96,23 @@ public class StartFragment extends Fragment {
         listener = null;
     }
 
-    public interface OnConnectedListener {
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.start_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.settingsMenuItem) {
+            listener.onSettings();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public interface Listener {
         void onConnected(boolean already);
+        void onSettings();
     }
 
     public interface ConnectionSettingsProvider {

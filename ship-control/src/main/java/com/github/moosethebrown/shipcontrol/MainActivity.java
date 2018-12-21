@@ -1,7 +1,9 @@
 package com.github.moosethebrown.shipcontrol;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -10,18 +12,22 @@ import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.preference.PreferenceManager;
 
 import com.github.moosethebrown.shipcontrol.data.ShipViewModel;
 
 public class MainActivity extends AppCompatActivity
-    implements StartFragment.OnConnectedListener,
+    implements StartFragment.Listener,
                StartFragment.ConnectionSettingsProvider,
-               ShipSelectFragment.OnListFragmentInteractionListener {
+               ShipSelectFragment.OnListFragmentInteractionListener,
+               SharedPreferences.OnSharedPreferenceChangeListener {
 
     public static final String LOG_TAG = "ship-control";
+    private static final String PREFS_BROKER_URI_KEY = "brokerURI";
 
     private ShipViewModel viewModel = null;
     private AppBarConfiguration appBarConfiguration;
+    private Handler handler = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +38,12 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         setupNavigationUI();
+
+        // subscribe to change of preferences to handle broker URI change
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .registerOnSharedPreferenceChangeListener(this);
+
+        handler = new Handler();
     }
 
     @Override
@@ -40,28 +52,37 @@ public class MainActivity extends AppCompatActivity
         return (navController.navigateUp() || super.onSupportNavigateUp());
     }
 
-    // StartFragment.OnConnectedListener implementation
+    // StartFragment.Listener implementation
     @Override
     public void onConnected(boolean already) {
+        NavController controller = Navigation.findNavController(this, R.id.nav_fragment);
         // connected to broker, navigate to ship selection
         if (already == true) {
             // immediately if we are already connected
-            Navigation.findNavController(this, R.id.nav_fragment).
-                    navigate(R.id.action_startFragment_to_shipSelectFragment);
-        } else {
+            controller.navigate(R.id.action_startFragment_to_shipSelectFragment);
+        }
+        else {
             // delayed navigation to allow splash screen to be seen
-            new Handler().postDelayed(() -> {
-                Navigation.findNavController(this, R.id.nav_fragment).
-                        navigate(R.id.action_startFragment_to_shipSelectFragment);
-            }, 1000);
+            handler.postDelayed(() -> {
+                if (controller.getCurrentDestination().getId() == R.id.startFragment) {
+                    controller.navigate(R.id.action_startFragment_to_shipSelectFragment);
+                }
+            }, 3000);
         }
     }
-    // end of StartFragment.OnConnectedListener implementation
+
+    @Override
+    public void onSettings() {
+        Navigation.findNavController(this, R.id.nav_fragment).
+                navigate(R.id.action_startFragment_to_settingsFragment);
+    }
+    // end of StartFragment.Listener implementation
 
     // StartFragment.ConnectionSettingsProvider implementation
     @Override
     public String getBroker() {
-        return "ssl://wsmnn-291:8883";
+        return PreferenceManager.getDefaultSharedPreferences(this)
+                .getString(PREFS_BROKER_URI_KEY, "");
     }
     // end of StartFragment.ConnectionSettingsProvider implementation
 
@@ -76,6 +97,15 @@ public class MainActivity extends AppCompatActivity
             navigate(R.id.action_shipSelectFragment_to_controlFragment);
     }
     // end of ShipSelectFragment.OnListFragmentInteractionListener implementation
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+        if (key.equals(PREFS_BROKER_URI_KEY)) {
+            Log.i(LOG_TAG,"MainActivity received broker URI change notification");
+            // disconnect from the old MQTT broker, start fragment will connect to the new one
+            viewModel.disconnect();
+        }
+    }
 
     private void setupNavigationUI() {
         NavController navController = Navigation.findNavController(this, R.id.nav_fragment);

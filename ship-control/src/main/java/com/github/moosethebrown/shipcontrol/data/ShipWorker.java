@@ -156,6 +156,7 @@ public class ShipWorker extends Thread implements MqttCallback {
     private void disconnect() {
         try {
             mqttClient.disconnect(0);
+            Log.i(LOG_TAG, "ShipWorker disconnected from broker");
         }
         catch (Exception e) {
             // just log it, app is unlikely to be interested

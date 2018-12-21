@@ -72,6 +72,13 @@ public class ShipViewModel extends ViewModel implements ShipCallback {
         shipHandler.connectToBroker();
     }
 
+    public void disconnect() {
+        if (shipHandler != null) {
+            shipHandler.disconnectFromBroker();
+        }
+        connected.setValue(Boolean.valueOf(false));
+    }
+
     public LiveData<Throwable> getLastError() {
         return lastError;
     }
@@ -118,8 +125,6 @@ public class ShipViewModel extends ViewModel implements ShipCallback {
     @Override
     protected void onCleared() {
         // view model is about to be destroyed, disconnect from the broker
-        if (shipHandler != null) {
-            shipHandler.disconnectFromBroker();
-        }
+        disconnect();
     }
 }
