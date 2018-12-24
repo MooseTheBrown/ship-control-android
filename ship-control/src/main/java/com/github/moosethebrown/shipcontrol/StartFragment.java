@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProviders;
@@ -61,7 +62,7 @@ public class StartFragment extends Fragment {
                 for (StackTraceElement element : e.getStackTrace()) {
                     Log.e(MainActivity.LOG_TAG, element.toString());
                 }
-                Toast.makeText(getContext(), R.string.connectionFailed, Toast.LENGTH_LONG).show();
+                showLastError(e);
             }
             // get notified about connection to broker being established and report to activity
             viewModel.getConnected().observe(this, (Boolean connected) -> {
@@ -69,6 +70,8 @@ public class StartFragment extends Fragment {
                     listener.onConnected(false);
                 }
             });
+            // get notified about connection issues
+            viewModel.getLastError().observe(this, this::showLastError);
         }
     }
 
@@ -117,5 +120,10 @@ public class StartFragment extends Fragment {
 
     public interface ConnectionSettingsProvider {
         String getBroker();
+    }
+
+    private void showLastError(Throwable error) {
+        TextView status = getView().findViewById(R.id.textView);
+        status.setText(error.getMessage());
     }
 }
