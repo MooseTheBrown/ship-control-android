@@ -98,23 +98,8 @@ public class StartFragment extends Fragment {
         listener = null;
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.start_menu, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.settingsMenuItem) {
-            listener.onSettings();
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     public interface Listener {
         void onConnected(boolean already);
-        void onSettings();
     }
 
     public interface ConnectionSettingsProvider {

@@ -13,9 +13,18 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="499" />
-                            <option name="y" value="-25" />
+                            <option name="x" value="523" />
+                            <option name="y" value="-26" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_controlFragment_to_settingsFragment2">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -25,8 +34,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="71" />
-                            <option name="y" value="-437" />
+                            <option name="x" value="171" />
+                            <option name="y" value="-464" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -37,13 +46,18 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="237" />
-                            <option name="y" value="-25" />
+                            <option name="x" value="255" />
+                            <option name="y" value="-27" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_shipSelectFragment_to_controlFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_shipSelectFragment_to_settingsFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -58,8 +72,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-27" />
-                            <option name="y" value="-24" />
+                            <option name="x" value="-17" />
+                            <option name="y" value="-26" />
                           </Point>
                         </option>
                         <option name="myPositions">

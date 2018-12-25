@@ -1,9 +1,15 @@
 package com.github.moosethebrown.shipcontrol;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -21,7 +27,8 @@ public class MainActivity extends AppCompatActivity
                StartFragment.ConnectionSettingsProvider,
                ShipSelectFragment.OnListFragmentInteractionListener,
                SharedPreferences.OnSharedPreferenceChangeListener,
-               ControlFragment.ControlSettingsProvider {
+               ControlFragment.ControlSettingsProvider,
+               RestartFragment.Listener {
 
     public static final String LOG_TAG = "ship-control";
     private static final String PREFS_BROKER_URI_KEY = "brokerURI";
@@ -62,6 +69,7 @@ public class MainActivity extends AppCompatActivity
         if (already == true) {
             // immediately if we are already connected
             controller.navigate(R.id.action_startFragment_to_shipSelectFragment);
+            controller.navigate(R.id.action_startFragment_to_shipSelectFragment);
         }
         else {
             // delayed navigation to allow splash screen to be seen
@@ -71,12 +79,6 @@ public class MainActivity extends AppCompatActivity
                 }
             }, 3000);
         }
-    }
-
-    @Override
-    public void onSettings() {
-        Navigation.findNavController(this, R.id.nav_fragment).
-                navigate(R.id.action_startFragment_to_settingsFragment);
     }
     // end of StartFragment.Listener implementation
 
@@ -120,10 +122,38 @@ public class MainActivity extends AppCompatActivity
     public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
         if (key.equals(PREFS_BROKER_URI_KEY)) {
             Log.i(LOG_TAG,"MainActivity received broker URI change notification");
-            // disconnect from the old MQTT broker, start fragment will connect to the new one
-            viewModel.disconnect();
+            new RestartFragment().show(getSupportFragmentManager(), "restartDialog");
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.settingsMenuItem) {
+            Navigation.findNavController(this, R.id.nav_fragment).
+                    navigate(R.id.settingsFragment);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    // RestartFragment.Listener implementation
+    @Override
+    public void onRestartNow() {
+        Log.i(LOG_TAG, "MainActivity: restarting application");
+        Intent restartIntent = getPackageManager().getLaunchIntentForPackage(getPackageName());
+        PendingIntent intent = PendingIntent.getActivity(this, 0,
+                restartIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmMgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, intent);
+        System.exit(0);
+    }
+    // end of RestartFragment.Listener implementation
 
     private void setupNavigationUI() {
         NavController navController = Navigation.findNavController(this, R.id.nav_fragment);

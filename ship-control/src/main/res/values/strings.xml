@@ -16,6 +16,9 @@
     <string name="brokerURIKey">MQTT broker URI</string>
     <string name="queryTimeoutKey">Ship query timeout (ms)</string>
     <string name="settingsTitle">Settings</string>
+    <string name="restartDialogMessage">Application restart is required for the setting to take effect</string>
+    <string name="restartDialogRestartNow">Restart now</string>
+    <string name="restartDialogLater">Later</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
