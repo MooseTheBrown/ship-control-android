@@ -20,10 +20,9 @@ import android.widget.TextView;
  */
 public class ControlFragment extends Fragment {
 
-    private static final int QUERY_TIMEOUT = 1000; // ms
-
     private ShipControl shipControl = null;
     private Handler handler = null;
+    private ControlSettingsProvider settingsProvider = null;
 
     public ControlFragment() {
         // Required empty public constructor
@@ -99,11 +98,21 @@ public class ControlFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        if (context instanceof ControlSettingsProvider) {
+            settingsProvider = (ControlSettingsProvider) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement ControlSettingsProvider");
+        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    public interface ControlSettingsProvider {
+        long getQueryTimeout();
     }
 
     private void setCurrentSpeed(final String currentSpeed) {
@@ -125,7 +134,7 @@ public class ControlFragment extends Fragment {
                 shipControl.query();
                 startQueryTimer();
             }
-        }, QUERY_TIMEOUT);
+        }, settingsProvider.getQueryTimeout());
     }
 
     private void stopQueryTimer() {

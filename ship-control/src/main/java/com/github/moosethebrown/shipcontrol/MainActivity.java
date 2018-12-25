@@ -20,10 +20,12 @@ public class MainActivity extends AppCompatActivity
     implements StartFragment.Listener,
                StartFragment.ConnectionSettingsProvider,
                ShipSelectFragment.OnListFragmentInteractionListener,
-               SharedPreferences.OnSharedPreferenceChangeListener {
+               SharedPreferences.OnSharedPreferenceChangeListener,
+               ControlFragment.ControlSettingsProvider {
 
     public static final String LOG_TAG = "ship-control";
     private static final String PREFS_BROKER_URI_KEY = "brokerURI";
+    private static final String PREFS_QUERY_TIMEOUT_KEY = "queryTimeout";
 
     private ShipViewModel viewModel = null;
     private AppBarConfiguration appBarConfiguration;
@@ -97,6 +99,22 @@ public class MainActivity extends AppCompatActivity
             navigate(R.id.action_shipSelectFragment_to_controlFragment);
     }
     // end of ShipSelectFragment.OnListFragmentInteractionListener implementation
+
+    // ControlFragment.ControlSettingsProvider implementation
+    public long getQueryTimeout() {
+        long timeout = 1000;
+        String strVal = PreferenceManager.getDefaultSharedPreferences(this)
+                .getString(PREFS_QUERY_TIMEOUT_KEY, "1000");
+        try {
+            timeout = Long.parseLong(strVal);
+        }
+        catch (NumberFormatException e) {
+            Log.e(LOG_TAG, "Cannot parse timeout preference value: " + e.getMessage());
+        }
+
+        return timeout;
+    }
+    // end of ControlFragment.ControlSettingsProvider implementation
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {

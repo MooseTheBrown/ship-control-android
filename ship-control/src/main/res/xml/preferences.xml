@@ -11,6 +11,8 @@
         android:id="@+id/queryTimeout"
         android:defaultValue="1000"
         android:key="queryTimeout"
+        android:numeric="integer"
+        android:digits="0123456789"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/queryTimeoutKey" />
