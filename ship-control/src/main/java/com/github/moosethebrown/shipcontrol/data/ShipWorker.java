@@ -15,7 +15,10 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 import java.nio.charset.Charset;
+import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import javax.net.ssl.SSLContext;
 
 /**
  * ShipWorker performs MQTT communications with a ship in a background thread
@@ -24,6 +27,8 @@ public class ShipWorker extends Thread implements MqttCallback {
     private static final String ANNOUNCE_TOPIC = "Announce";
     private static final String LOG_TAG = "ship-control";
 
+    private String brokerUsername;
+    private String brokerPassword;
     private String shipId = "";
     private String rqTopic;
     private String respTopic;
@@ -33,10 +38,12 @@ public class ShipWorker extends Thread implements MqttCallback {
     private String clientId;
     private Gson gson = new Gson();
 
-    public ShipWorker(final String broker, ShipCallback callback,
-                      LinkedBlockingQueue<ShipWorkerCommand> workerQueue) throws MqttException {
+    public ShipWorker(final String broker, final String brokerUsername, final String brokerPassword,
+                      ShipCallback callback, LinkedBlockingQueue<ShipWorkerCommand> workerQueue) throws MqttException {
         this.callback = callback;
         this.workerQueue = workerQueue;
+        this.brokerUsername = brokerUsername;
+        this.brokerPassword = brokerPassword;
         this.clientId = MqttAsyncClient.generateClientId();
         this.mqttClient = new MqttAsyncClient(broker, this.clientId, new MemoryPersistence());
         this.mqttClient.setCallback(this);
@@ -122,10 +129,16 @@ public class ShipWorker extends Thread implements MqttCallback {
     // Connect to MQTT broker
     private void connect() {
         MqttConnectOptions connOpts = new MqttConnectOptions();
-        connOpts.setAutomaticReconnect(true);
-        connOpts.setCleanSession(true);
-        // TODO: change to secure implementation
-        connOpts.setSocketFactory(SSLCertificateSocketFactory.getInsecure(5000, null));
+        try {
+            connOpts.setUserName(this.brokerUsername);
+            connOpts.setPassword(this.brokerPassword.toCharArray());
+            connOpts.setAutomaticReconnect(true);
+            connOpts.setCleanSession(true);
+            connOpts.setSocketFactory(SSLContext.getDefault().getSocketFactory());
+        }
+        catch (Exception e) {
+           Log.e(LOG_TAG, "Failed to initialize MqttConnectOptions: ", e);
+        }
 
         try {
             IMqttToken connToken = mqttClient.connect(connOpts);
@@ -137,16 +150,7 @@ public class ShipWorker extends Thread implements MqttCallback {
             Log.i(LOG_TAG, "ShipWorker connected to MQTT broker");
         }
         catch (MqttException e) {
-            Log.e(LOG_TAG, "ShipWorker failed to connect to broker, reason: " + e.getReasonCode());
-            Log.e(LOG_TAG, e.getMessage());
-            for (StackTraceElement element : e.getStackTrace()) {
-                Log.e(LOG_TAG, element.toString());
-            }
-            Throwable cause = e.getCause();
-            Log.e(LOG_TAG, "Caused by: " + cause.getMessage());
-            for (StackTraceElement element : cause.getStackTrace()) {
-                Log.e(LOG_TAG, element.toString());
-            }
+            Log.e(LOG_TAG, "ShipWorker failed to connect to broker: ", e);
 
             callback.onError(e);
         }

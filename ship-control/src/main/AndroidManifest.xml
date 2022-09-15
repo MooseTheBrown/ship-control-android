@@ -11,7 +11,7 @@
         android:roundIcon="@drawable/anchor"
         android:supportsRtl="true"
         android:theme="@style/ShipControlTheme">
-        <activity android:name="com.github.moosethebrown.shipcontrol.MainActivity">
+        <activity android:name="com.github.moosethebrown.shipcontrol.MainActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

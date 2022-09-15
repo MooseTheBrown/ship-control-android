@@ -19,7 +19,6 @@
     <string name="restartDialogMessage">Application restart is required for the setting to take effect</string>
     <string name="restartDialogRestartNow">Restart now</string>
     <string name="restartDialogLater">Later</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="brokerUsername">MQTT broker username</string>
+    <string name="brokerPassword">MQTT broker password</string>
 </resources>

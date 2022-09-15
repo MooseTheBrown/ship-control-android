@@ -16,8 +16,8 @@ public class ShipHandler implements ShipControl {
     private LinkedBlockingQueue<ShipWorkerCommand> workerQueue =
             new LinkedBlockingQueue<>(10);
 
-    public ShipHandler(final String broker, ShipCallback callback) throws MqttException {
-        worker = new ShipWorker(broker, callback, workerQueue);
+    public ShipHandler(final String broker, final String username, final String password, ShipCallback callback) throws MqttException {
+        worker = new ShipWorker(broker, username, password, callback, workerQueue);
     }
 
     public void connectToBroker() throws IllegalStateException {

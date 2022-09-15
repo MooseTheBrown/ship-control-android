@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity
 
     public static final String LOG_TAG = "ship-control";
     private static final String PREFS_BROKER_URI_KEY = "brokerURI";
+    private static final String PREFS_BROKER_USER_KEY = "brokerUsername";
+    private static final String PREFS_BROKER_PASSWORD_KEY = "brokerPassword";
     private static final String PREFS_QUERY_TIMEOUT_KEY = "queryTimeout";
 
     private ShipViewModel viewModel = null;
@@ -88,6 +90,18 @@ public class MainActivity extends AppCompatActivity
         return PreferenceManager.getDefaultSharedPreferences(this)
                 .getString(PREFS_BROKER_URI_KEY, "");
     }
+
+    @Override
+    public String getUsername() {
+        return PreferenceManager.getDefaultSharedPreferences(this)
+                .getString(PREFS_BROKER_USER_KEY, "");
+    }
+
+    @Override
+    public String getPassword() {
+        return PreferenceManager.getDefaultSharedPreferences(this)
+                .getString(PREFS_BROKER_PASSWORD_KEY, "");
+    }
     // end of StartFragment.ConnectionSettingsProvider implementation
 
     // ShipSelectFragment.OnListFragmentInteractionListener implementation
@@ -120,7 +134,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-        if (key.equals(PREFS_BROKER_URI_KEY)) {
+        if ((key.equals(PREFS_BROKER_URI_KEY)) ||
+            (key.equals(PREFS_BROKER_USER_KEY)) ||
+            (key.equals(PREFS_BROKER_PASSWORD_KEY))) {
             Log.i(LOG_TAG,"MainActivity received broker URI change notification");
             new RestartFragment().show(getSupportFragmentManager(), "restartDialog");
         }

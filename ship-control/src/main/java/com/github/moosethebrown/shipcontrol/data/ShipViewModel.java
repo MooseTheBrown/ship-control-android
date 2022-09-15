@@ -67,8 +67,8 @@ public class ShipViewModel extends ViewModel implements ShipCallback {
         return currentSteering;
     }
 
-    public void connect(final String broker) throws Exception {
-        shipHandler = new ShipHandler(broker, this);
+    public void connect(final String broker, final String username, final String password) throws Exception {
+        shipHandler = new ShipHandler(broker, username, password, this);
         shipHandler.connectToBroker();
     }
 

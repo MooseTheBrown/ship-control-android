@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ship Control</string>
+    <string name="connecting">Соединение с сервером</string>
+    <string name="curDataHeaderValue">Текущие значения</string>
+    <string name="speedCaptionValue">скорость:</string>
+    <string name="steeringCaptionValue">руль:</string>
+    <string name="controlsCaptionValue">Управление</string>
+    <string name="speedUpButtonDescr">скорость +</string>
+    <string name="speedDownButtonDescr">скорость -</string>
+    <string name="curShipCaptionValue">Текущее судно:</string>
+    <string name="turnLeftButtonDescr">влево</string>
+    <string name="turnRightButtonDescr">вправо</string>
+    <string name="connectionFailed">Ошибка соединения</string>
+    <string name="Connecting">Соединение...</string>
+    <string name="selectShip">Выбор судна</string>
+    <string name="brokerURIKey">Адрес MQTT брокера</string>
+    <string name="queryTimeoutKey">Таймаут запросов к судну</string>
+    <string name="settingsTitle">Настройки</string>
+    <string name="restartDialogMessage">Для применения настроек необходим перезапуск приложения</string>
+    <string name="restartDialogRestartNow">Перезапустить</string>
+    <string name="restartDialogLater">Позже</string>
+    <string name="brokerUsername">Имя пользователя MQTT</string>
+    <string name="brokerPassword">Пароль MQTT</string>
+</resources>

@@ -6,9 +6,6 @@ import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -22,8 +19,8 @@ import com.github.moosethebrown.shipcontrol.data.ShipViewModel;
  */
 public class StartFragment extends Fragment {
 
-    Listener listener;
-    ConnectionSettingsProvider connSettingsProvider;
+    private Listener listener;
+    private ConnectionSettingsProvider connSettingsProvider;
 
     public StartFragment() {
         // Required empty public constructor
@@ -54,7 +51,9 @@ public class StartFragment extends Fragment {
         else {
             // connect to MQTT broker
             try {
-                viewModel.connect(connSettingsProvider.getBroker());
+                viewModel.connect(connSettingsProvider.getBroker(),
+                        connSettingsProvider.getUsername(),
+                        connSettingsProvider.getPassword());
             }
             catch (Exception e) {
                 Log.e(MainActivity.LOG_TAG, e.getMessage());
@@ -104,6 +103,8 @@ public class StartFragment extends Fragment {
 
     public interface ConnectionSettingsProvider {
         String getBroker();
+        String getUsername();
+        String getPassword();
     }
 
     private void showLastError(Throwable error) {

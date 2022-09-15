@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdk 31
     defaultConfig {
         applicationId 'com.github.moosethebrown.shipcontrol'
-        minSdkVersion 19
-        targetSdkVersion 28
+        minSdkVersion 26
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
     }
@@ -30,16 +30,17 @@ repositories {
 }
 
 dependencies {
-    def nav_version = "1.0.0-alpha08"
+    implementation 'androidx.navigation:navigation-fragment:2.4.1'
+    implementation 'androidx.navigation:navigation-runtime:2.5.2'
+    implementation 'androidx.navigation:navigation-ui:2.5.2'
+    def nav_version = "2.4.1"
     def lifecycle_version = "2.0.0"
-    implementation "android.arch.navigation:navigation-fragment:$nav_version"
-    implementation "android.arch.navigation:navigation-ui:$nav_version"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
     implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha01'
-    implementation 'androidx.preference:preference:1.0.0'
+    implementation 'androidx.preference:preference:1.2.0'
     implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'

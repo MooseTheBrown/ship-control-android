@@ -8,10 +8,24 @@
         android:singleLine="true"
         android:title="@string/brokerURIKey" />
     <EditTextPreference
+        android:id="@+id/brokerUsername"
+        android:key="brokerUsername"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:defaultValue="username"
+        android:title="@string/brokerUsername" />
+    <EditTextPreference
+        android:id="@+id/brokerPassword"
+        android:key="brokerPassword"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:defaultValue="password"
+        android:title="@string/brokerPassword" />
+    <EditTextPreference
         android:id="@+id/queryTimeout"
         android:defaultValue="1000"
         android:key="queryTimeout"
-        android:numeric="integer"
+        android:inputType="number"
         android:digits="0123456789"
         android:selectAllOnFocus="true"
         android:singleLine="true"
