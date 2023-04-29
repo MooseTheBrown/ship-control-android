@@ -34,27 +34,37 @@ public class ShipHandler implements ShipControl {
     }
 
     public void speedUp() throws IllegalStateException {
-        ShipRequest rq = new ShipRequest(ShipRequest.TYPE_CMD, ShipRequest.CMD_SPEED_UP);
+        ShipRequest rq = new ShipRequest(ShipRequest.TYPE_CMD, ShipRequest.CMD_SPEED_UP, "");
         workerQueue.add(new ShipWorkerCommand(ShipWorkerCommand.CMD_REQUEST, rq));
     }
 
     public void speedDown() throws IllegalStateException {
-        ShipRequest rq = new ShipRequest(ShipRequest.TYPE_CMD, ShipRequest.CMD_SPEED_DOWN);
+        ShipRequest rq = new ShipRequest(ShipRequest.TYPE_CMD, ShipRequest.CMD_SPEED_DOWN, "");
         workerQueue.add(new ShipWorkerCommand(ShipWorkerCommand.CMD_REQUEST, rq));
     }
 
     public void turnLeft() throws IllegalStateException {
-        ShipRequest rq = new ShipRequest(ShipRequest.TYPE_CMD, ShipRequest.CMD_TURN_LEFT);
+        ShipRequest rq = new ShipRequest(ShipRequest.TYPE_CMD, ShipRequest.CMD_TURN_LEFT, "");
         workerQueue.add(new ShipWorkerCommand(ShipWorkerCommand.CMD_REQUEST, rq));
     }
 
     public void turnRight() throws IllegalStateException {
-        ShipRequest rq = new ShipRequest(ShipRequest.TYPE_CMD, ShipRequest.CMD_TURN_RIGHT);
+        ShipRequest rq = new ShipRequest(ShipRequest.TYPE_CMD, ShipRequest.CMD_TURN_RIGHT, "");
+        workerQueue.add(new ShipWorkerCommand(ShipWorkerCommand.CMD_REQUEST, rq));
+    }
+
+    public void setSpeed(String speed) throws IllegalStateException {
+        ShipRequest rq = new ShipRequest(ShipRequest.TYPE_CMD, ShipRequest.CMD_SET_SPEED, speed);
+        workerQueue.add(new ShipWorkerCommand(ShipWorkerCommand.CMD_REQUEST, rq));
+    }
+
+    public void setSteering(String steering) throws IllegalStateException {
+        ShipRequest rq = new ShipRequest(ShipRequest.TYPE_CMD, ShipRequest.CMD_SET_STEERING, steering);
         workerQueue.add(new ShipWorkerCommand(ShipWorkerCommand.CMD_REQUEST, rq));
     }
 
     public void query() throws IllegalStateException {
-        ShipRequest rq = new ShipRequest(ShipRequest.TYPE_QUERY, "");
+        ShipRequest rq = new ShipRequest(ShipRequest.TYPE_QUERY, "", "");
         workerQueue.add(new ShipWorkerCommand(ShipWorkerCommand.CMD_REQUEST, rq));
     }
 }

@@ -198,7 +198,7 @@ public class ShipWorker extends Thread implements MqttCallback {
             byte[] payload = msg.getBytes(Charset.forName("UTF-8"));
             mqttClient.publish(rqTopic, payload, 2, false);
 
-            Log.i(LOG_TAG, "ShipWorker sent request to ship");
+            Log.i(LOG_TAG, "ShipWorker sent request to ship:\n" + msg);
         }
         catch (Exception e) {
             Log.e(LOG_TAG, "ShipWorker failed to send request to ship: " + e.getMessage());

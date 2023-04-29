@@ -13,14 +13,18 @@ public class ShipRequest {
     public static final String CMD_SPEED_DOWN = "speed_down";
     public static final String CMD_TURN_LEFT = "turn_left";
     public static final String CMD_TURN_RIGHT = "turn_right";
+    public static final String CMD_SET_SPEED = "set_speed";
+    public static final String CMD_SET_STEERING = "set_steering";
 
     private final String type;
     private final String cmd;
+    private final String data;
 
     // cmd argument is ignored for query type
-    public ShipRequest(final String type, final String cmd) {
+    public ShipRequest(final String type, final String cmd, final String data) {
         this.type = type;
         this.cmd = cmd;
+        this.data = data;
     }
 
     public String getType() { return type; }

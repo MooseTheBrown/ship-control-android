@@ -5,5 +5,7 @@ public interface ShipControl {
     void speedDown() throws IllegalStateException;
     void turnLeft() throws IllegalStateException;
     void turnRight() throws IllegalStateException;
+    void setSpeed(String speed) throws IllegalStateException;
+    void setSteering(String steering) throws IllegalStateException;
     void query() throws IllegalStateException;
 }
