@@ -6,6 +6,7 @@
         android:key="brokerURI"
         android:selectAllOnFocus="true"
         android:singleLine="true"
+        android:defaultValue="ssl://moosethebrown.ru:18883"
         android:title="@string/brokerURIKey" />
     <EditTextPreference
         android:id="@+id/brokerUsername"
