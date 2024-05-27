@@ -99,7 +99,6 @@ public class ControlFragment extends Fragment {
         btnLeft.setOnClickListener(v -> {
             if (shipControl != null) {
                 shipControl.turnLeft();
-                adjustSteeringBar(false);
             }
         });
         // turn right button
@@ -107,7 +106,6 @@ public class ControlFragment extends Fragment {
         btnRight.setOnClickListener(v -> {
             if (shipControl != null) {
                 shipControl.turnRight();
-                adjustSteeringBar(true);
             }
         });
         // speed up button
@@ -115,7 +113,6 @@ public class ControlFragment extends Fragment {
         btnSpeedUp.setOnClickListener(v -> {
             if (shipControl != null) {
                 shipControl.speedUp();
-                adjustSpeedBar(true);
             }
         });
         // speed down button
@@ -123,7 +120,6 @@ public class ControlFragment extends Fragment {
         btnSpeedDown.setOnClickListener(v -> {
             if (shipControl != null) {
                 shipControl.speedDown();
-                adjustSpeedBar(false);
             }
         });
 
@@ -133,7 +129,7 @@ public class ControlFragment extends Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 Log.d(LOG_TAG, "steering bar onProgressChanged(), progress=" + progress);
-                if (shipControl != null) {
+                if ((fromUser) && (shipControl != null)) {
                     String steering = Optional.ofNullable(steeringMap.get(progress)).orElse("straight");
                     shipControl.setSteering(steering);
                 }
@@ -154,7 +150,7 @@ public class ControlFragment extends Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 Log.d(LOG_TAG, "speed bar onProgressChanged, progress=" + progress);
-                if (shipControl != null) {
+                if ((fromUser) && (shipControl != null)) {
                     String speed = Optional.ofNullable(speedMap.get(progress)).orElse("stop");
                     shipControl.setSpeed(speed);
                 }
@@ -183,12 +179,10 @@ public class ControlFragment extends Fragment {
         // current speed
         final String curSpeed = viewModel.getCurrentSpeed().getValue();
         setCurrentSpeed(curSpeed);
-        setSpeedBar(curSpeed);
         viewModel.getCurrentSpeed().observe(this, this::setCurrentSpeed);
         // current steering
         final String curSteering = viewModel.getCurrentSteering().getValue();
         setCurrentSteering(curSteering);
-        setSteeringBar(curSteering);
         viewModel.getCurrentSteering().observe(this, this::setCurrentSteering);
 
         // start periodic queries
@@ -224,13 +218,7 @@ public class ControlFragment extends Fragment {
     private void setCurrentSpeed(final String currentSpeed) {
         TextView v = getView().findViewById(R.id.speed);
         v.setText(currentSpeed);
-    }
-
-    private void adjustSpeedBar(boolean up) {
-        SeekBar speedBar = getView().findViewById(R.id.speedBar);
-        int currentProgress = speedBar.getProgress();
-        int targetProgress = up ? currentProgress + 1 : currentProgress - 1;
-        speedBar.setProgress(targetProgress, true);
+        setSpeedBar(currentSpeed);
     }
 
     private void setSpeedBar(final String speed) {
@@ -245,13 +233,7 @@ public class ControlFragment extends Fragment {
     private void setCurrentSteering(final String currentSteering) {
         TextView v = getView().findViewById(R.id.steering);
         v.setText(currentSteering);
-    }
-
-    private void adjustSteeringBar(boolean right) {
-        SeekBar steeringBar = getView().findViewById(R.id.steeringBar);
-        int currentProgress = steeringBar.getProgress();
-        int targetProgress = right ? currentProgress + 1 : currentProgress - 1;
-        steeringBar.setProgress(targetProgress, true);
+        setSteeringBar(currentSteering);
     }
 
     private void setSteeringBar(final String steering) {
