@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -37,8 +38,8 @@ public class MainActivity extends AppCompatActivity
     private static final String PREFS_QUERY_TIMEOUT_KEY = "queryTimeout";
 
     private ShipViewModel viewModel = null;
-    private AppBarConfiguration appBarConfiguration;
     private Handler handler = null;
+    private ControllerHandler controllerHandler = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,8 @@ public class MainActivity extends AppCompatActivity
                 .registerOnSharedPreferenceChangeListener(this);
 
         handler = new Handler();
+
+        controllerHandler = new ControllerHandler(viewModel.getShipControl(), true);
     }
 
     @Override
@@ -68,7 +71,7 @@ public class MainActivity extends AppCompatActivity
     public void onConnected(boolean already) {
         NavController controller = Navigation.findNavController(this, R.id.nav_fragment);
         // connected to broker, navigate to ship selection
-        if (already == true) {
+        if (already) {
             // immediately if we are already connected
             controller.navigate(R.id.action_startFragment_to_shipSelectFragment);
             controller.navigate(R.id.action_startFragment_to_shipSelectFragment);
@@ -164,16 +167,26 @@ public class MainActivity extends AppCompatActivity
         Log.i(LOG_TAG, "MainActivity: restarting application");
         Intent restartIntent = getPackageManager().getLaunchIntentForPackage(getPackageName());
         PendingIntent intent = PendingIntent.getActivity(this, 0,
-                restartIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+                restartIntent, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         AlarmManager alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarmMgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, intent);
         System.exit(0);
     }
     // end of RestartFragment.Listener implementation
 
+    @Override
+    public boolean dispatchGenericMotionEvent(MotionEvent event) {
+        if (controllerHandler.handleMotionEvent(event)) {
+            return true;
+        }
+        else {
+            return super.dispatchGenericMotionEvent(event);
+        }
+    }
+
     private void setupNavigationUI() {
         NavController navController = Navigation.findNavController(this, R.id.nav_fragment);
-        appBarConfiguration = new AppBarConfiguration.Builder(R.id.startFragment, R.id.shipSelectFragment).build();
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.startFragment, R.id.shipSelectFragment).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         navController.addOnDestinationChangedListener(
                 (NavController controller, NavDestination destination, Bundle args) -> {

@@ -31,55 +31,8 @@ public class ControlFragment extends Fragment {
     private ShipControl shipControl = null;
     private Handler handler = null;
     private ControlSettingsProvider settingsProvider = null;
-    private final Map<Integer, String> steeringMap;
-    private final Map<Integer, String> speedMap;
 
     public ControlFragment() {
-        steeringMap = new HashMap<Integer, String>();
-        steeringMap.put(0, "straight");
-        steeringMap.put(1, "right10");
-        steeringMap.put(2, "right20");
-        steeringMap.put(3, "right30");
-        steeringMap.put(4, "right40");
-        steeringMap.put(5, "right50");
-        steeringMap.put(6, "right60");
-        steeringMap.put(7, "right70");
-        steeringMap.put(8, "right80");
-        steeringMap.put(9, "right90");
-        steeringMap.put(10, "right100");
-        steeringMap.put(-1, "left10");
-        steeringMap.put(-2, "left20");
-        steeringMap.put(-3, "left30");
-        steeringMap.put(-4, "left40");
-        steeringMap.put(-5, "left50");
-        steeringMap.put(-6, "left60");
-        steeringMap.put(-7, "left70");
-        steeringMap.put(-8, "left80");
-        steeringMap.put(-9, "left90");
-        steeringMap.put(-10, "left100");
-
-        speedMap = new HashMap<Integer, String>();
-        speedMap.put(0, "stop");
-        speedMap.put(1, "fwd10");
-        speedMap.put(2, "fwd20");
-        speedMap.put(3, "fwd30");
-        speedMap.put(4, "fwd40");
-        speedMap.put(5, "fwd50");
-        speedMap.put(6, "fwd60");
-        speedMap.put(7, "fwd70");
-        speedMap.put(8, "fwd80");
-        speedMap.put(9, "fwd90");
-        speedMap.put(10, "fwd100");
-        speedMap.put(-1,"rev10");
-        speedMap.put(-2, "rev20");
-        speedMap.put(-3, "rev30");
-        speedMap.put(-4, "rev40");
-        speedMap.put(-5, "rev50");
-        speedMap.put(-6, "rev60");
-        speedMap.put(-7, "rev70");
-        speedMap.put(-8, "rev80");
-        speedMap.put(-9, "rev90");
-        speedMap.put(-10, "rev100");
     }
 
     @Override
@@ -130,8 +83,7 @@ public class ControlFragment extends Fragment {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 Log.d(LOG_TAG, "steering bar onProgressChanged(), progress=" + progress);
                 if ((fromUser) && (shipControl != null)) {
-                    String steering = Optional.ofNullable(steeringMap.get(progress)).orElse("straight");
-                    shipControl.setSteering(steering);
+                    shipControl.setSteering(progress);
                 }
             }
 
@@ -151,8 +103,7 @@ public class ControlFragment extends Fragment {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 Log.d(LOG_TAG, "speed bar onProgressChanged, progress=" + progress);
                 if ((fromUser) && (shipControl != null)) {
-                    String speed = Optional.ofNullable(speedMap.get(progress)).orElse("stop");
-                    shipControl.setSpeed(speed);
+                    shipControl.setSpeed(progress);
                 }
             }
 
@@ -223,7 +174,7 @@ public class ControlFragment extends Fragment {
 
     private void setSpeedBar(final String speed) {
         SeekBar speedBar = getView().findViewById(R.id.speedBar);
-        for (Map.Entry<Integer, String> speedEntry : speedMap.entrySet()) {
+        for (Map.Entry<Integer, String> speedEntry : shipControl.getSpeedMap().entrySet()) {
             if (speedEntry.getValue().equals(speed)) {
                 speedBar.setProgress(speedEntry.getKey().intValue(), false);
             }
@@ -238,7 +189,7 @@ public class ControlFragment extends Fragment {
 
     private void setSteeringBar(final String steering) {
         SeekBar steeringBar = getView().findViewById(R.id.steeringBar);
-        for (Map.Entry<Integer, String> steeringEntry : steeringMap.entrySet()) {
+        for (Map.Entry<Integer, String> steeringEntry : shipControl.getSteeringMap().entrySet()) {
             if (steeringEntry.getValue().equals(steering)) {
                 steeringBar.setProgress(steeringEntry.getKey().intValue(), false);
             }
