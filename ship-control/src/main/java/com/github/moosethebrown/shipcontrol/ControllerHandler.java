@@ -35,15 +35,20 @@ public class ControllerHandler {
         float y = getCenteredAxis(event, inputDevice, MotionEvent.AXIS_Y, historyPos);
         if (y > 0) {
             float max = inputDevice.getMotionRange(MotionEvent.AXIS_Y, event.getSource()).getMax();
+            Log.d(LOG_TAG, "y = " + y + ", max = " + max);
             int speed = (int)(((y * 10) / max) + 0.5);
             Log.d(LOG_TAG, "setting speed to " + speed);
             shipControl.setSpeed(speed);
         }
         else if (y < 0) {
             float min = inputDevice.getMotionRange(MotionEvent.AXIS_Y, event.getSource()).getMin();
-            int speed = (int)(((y * 10) / min) - 0.5);
+            Log.d(LOG_TAG, "y = " + y + ", min = " + min);
+            int speed = (int)(((y * 10) / Math.abs(min)) - 0.5);
             Log.d(LOG_TAG, "setting speed to " + speed);
             shipControl.setSpeed(speed);
+        }
+        else {
+            shipControl.setSpeed(0);
         }
 
         float x;
@@ -57,15 +62,20 @@ public class ControllerHandler {
         x = getCenteredAxis(event, inputDevice, steeringAxis, historyPos);
         if (x > 0) {
             float max = inputDevice.getMotionRange(steeringAxis, event.getSource()).getMax();
+            Log.d(LOG_TAG, "x = " + x + ", max = " + max);
             int steering = (int)(((x * 10) / max) + 0.5);
             Log.d(LOG_TAG, "setting steering to " + steering);
             shipControl.setSteering(steering);
         }
         else if (x < 0) {
             float min = inputDevice.getMotionRange(steeringAxis, event.getSource()).getMin();
-            int steering = (int)(((x * 10) / min) + 0.5);
+            Log.d(LOG_TAG, "x = " + x + ", min = " + min);
+            int steering = (int)(((x * 10) / Math.abs(min)) - 0.5);
             Log.d(LOG_TAG, "setting steering to " + steering);
             shipControl.setSteering(steering);
+        }
+        else {
+            shipControl.setSteering(0);
         }
     }
 

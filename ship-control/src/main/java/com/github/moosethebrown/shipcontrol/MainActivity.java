@@ -57,9 +57,6 @@ public class MainActivity extends AppCompatActivity
                 .registerOnSharedPreferenceChangeListener(this);
 
         handler = new Handler();
-        boolean useTwoJoysticks = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(PREFS_USE_TWO_JOYSTICKS_KEY, true);
-        Log.d(LOG_TAG, "initializing controller handler, useTwoJoysticks = " + useTwoJoysticks);
-        controllerHandler = new ControllerHandler(viewModel.getShipControl(), true);
     }
 
     @Override
@@ -72,6 +69,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onConnected(boolean already) {
         NavController controller = Navigation.findNavController(this, R.id.nav_fragment);
+
+        boolean useTwoJoysticks = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(PREFS_USE_TWO_JOYSTICKS_KEY, true);
+        Log.d(LOG_TAG, "initializing controller handler, useTwoJoysticks = " + useTwoJoysticks);
+        controllerHandler = new ControllerHandler(viewModel.getShipControl(), true);
+
         // connected to broker, navigate to ship selection
         if (already) {
             // immediately if we are already connected
@@ -183,7 +185,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean dispatchGenericMotionEvent(MotionEvent event) {
-        if (controllerHandler.handleMotionEvent(event)) {
+        if ((controllerHandler != null) && (controllerHandler.handleMotionEvent(event))) {
             return true;
         }
         else {
