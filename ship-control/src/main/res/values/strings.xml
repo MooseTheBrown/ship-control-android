@@ -21,4 +21,7 @@
     <string name="restartDialogLater">Later</string>
     <string name="brokerUsername">MQTT broker username</string>
     <string name="brokerPassword">MQTT broker password</string>
+    <string name="mqttSettings">MQTT settings</string>
+    <string name="controllerSettings">Controller settings</string>
+    <string name="useTwoJoysticks">Use two joysticks</string>
 </resources>

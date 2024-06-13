@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity
     private static final String PREFS_BROKER_USER_KEY = "brokerUsername";
     private static final String PREFS_BROKER_PASSWORD_KEY = "brokerPassword";
     private static final String PREFS_QUERY_TIMEOUT_KEY = "queryTimeout";
+    private static final String PREFS_USE_TWO_JOYSTICKS_KEY = "controllerTwoJoysticks";
 
     private ShipViewModel viewModel = null;
     private Handler handler = null;
@@ -56,7 +57,8 @@ public class MainActivity extends AppCompatActivity
                 .registerOnSharedPreferenceChangeListener(this);
 
         handler = new Handler();
-
+        boolean useTwoJoysticks = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(PREFS_USE_TWO_JOYSTICKS_KEY, true);
+        Log.d(LOG_TAG, "initializing controller handler, useTwoJoysticks = " + useTwoJoysticks);
         controllerHandler = new ControllerHandler(viewModel.getShipControl(), true);
     }
 
@@ -142,6 +144,11 @@ public class MainActivity extends AppCompatActivity
             (key.equals(PREFS_BROKER_PASSWORD_KEY))) {
             Log.i(LOG_TAG,"MainActivity received broker URI change notification");
             new RestartFragment().show(getSupportFragmentManager(), "restartDialog");
+        }
+        else if (key.equals(PREFS_USE_TWO_JOYSTICKS_KEY)) {
+            boolean useTwoJoysticks = prefs.getBoolean(PREFS_USE_TWO_JOYSTICKS_KEY, true);
+            Log.d(LOG_TAG, "useTwoJoysticks changed, reinitializing controllerHandler, new value: " + useTwoJoysticks);
+            controllerHandler = new ControllerHandler(viewModel.getShipControl(), useTwoJoysticks);
         }
     }
 

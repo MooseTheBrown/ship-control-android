@@ -22,4 +22,7 @@
     <string name="restartDialogLater">Позже</string>
     <string name="brokerUsername">Имя пользователя MQTT</string>
     <string name="brokerPassword">Пароль MQTT</string>
+    <string name="mqttSettings">Настройки MQTT</string>
+    <string name="controllerSettings">Настройки контроллера</string>
+    <string name="useTwoJoysticks">Использовать два джойстика</string>
 </resources>

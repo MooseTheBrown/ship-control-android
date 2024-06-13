@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <PreferenceCategory android:title="@string/mqttSettings">
     <EditTextPreference
         android:id="@+id/brokerURI"
         android:key="brokerURI"
@@ -31,4 +32,11 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/queryTimeoutKey" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/controllerSettings">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="controllerTwoJoysticks"
+            android:title="@string/useTwoJoysticks" />
+    </PreferenceCategory>
 </PreferenceScreen>
