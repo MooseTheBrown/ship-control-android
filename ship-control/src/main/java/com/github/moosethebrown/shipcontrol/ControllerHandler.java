@@ -2,6 +2,7 @@ package com.github.moosethebrown.shipcontrol;
 
 import android.util.Log;
 import android.view.InputDevice;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 
 import com.github.moosethebrown.shipcontrol.data.ShipControl;
@@ -29,10 +30,37 @@ public class ControllerHandler {
         return false;
     }
 
+    public boolean handleKeyEvent(KeyEvent event) {
+        if ((event.getSource() & InputDevice.SOURCE_GAMEPAD) == InputDevice.SOURCE_GAMEPAD &&
+                event.getAction() == KeyEvent.ACTION_DOWN) {
+            if (event.getRepeatCount() == 0) {
+                Log.d(LOG_TAG, "KeyEvent: " + event.getKeyCode());
+                switch (event.getKeyCode()) {
+                    case KeyEvent.KEYCODE_BUTTON_Y:
+                        shipControl.speedUp();
+                        return true;
+                    case KeyEvent.KEYCODE_BUTTON_A:
+                        shipControl.speedDown();
+                        return true;
+                    case KeyEvent.KEYCODE_BUTTON_X:
+                        shipControl.turnLeft();
+                        return true;
+                    case KeyEvent.KEYCODE_BUTTON_B:
+                        shipControl.turnRight();
+                        return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     private void processJoystickInput(MotionEvent event, int historyPos) {
         InputDevice inputDevice = event.getDevice();
+
         // speed is changed by AXIS_Y
         float y = getCenteredAxis(event, inputDevice, MotionEvent.AXIS_Y, historyPos);
+        y *= -1;
         if (y > 0) {
             float max = inputDevice.getMotionRange(MotionEvent.AXIS_Y, event.getSource()).getMax();
             Log.d(LOG_TAG, "y = " + y + ", max = " + max);

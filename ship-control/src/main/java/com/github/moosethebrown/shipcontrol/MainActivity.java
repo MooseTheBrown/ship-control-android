@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -190,6 +191,16 @@ public class MainActivity extends AppCompatActivity
         }
         else {
             return super.dispatchGenericMotionEvent(event);
+        }
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if ((controllerHandler != null) && (controllerHandler.handleKeyEvent(event))) {
+            return true;
+        }
+        else {
+            return super.dispatchKeyEvent(event);
         }
     }
 
