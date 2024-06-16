@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity
                ControlFragment.ControlSettingsProvider,
                RestartFragment.Listener {
 
-    public static final String LOG_TAG = "ship-control";
+    public static final String LOG_TAG = "ship-control.MainActivity";
     private static final String PREFS_BROKER_URI_KEY = "brokerURI";
     private static final String PREFS_BROKER_USER_KEY = "brokerUsername";
     private static final String PREFS_BROKER_PASSWORD_KEY = "brokerPassword";
@@ -186,6 +186,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean dispatchGenericMotionEvent(MotionEvent event) {
+        Log.d(LOG_TAG, "dispatchGenericMotionEvent, controllerHandler=" + controllerHandler);
         if ((controllerHandler != null) && (controllerHandler.handleMotionEvent(event))) {
             return true;
         }
@@ -196,6 +197,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
+        Log.d(LOG_TAG, "dispatchKeyEvent, controllerHandler=" + controllerHandler);
         if ((controllerHandler != null) && (controllerHandler.handleKeyEvent(event))) {
             return true;
         }
