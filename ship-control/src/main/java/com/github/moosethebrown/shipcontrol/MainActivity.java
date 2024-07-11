@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -58,6 +59,15 @@ public class MainActivity extends AppCompatActivity
                 .registerOnSharedPreferenceChangeListener(this);
 
         handler = new Handler();
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Log.d(LOG_TAG, "landscape orientation, hiding action bar");
+            getSupportActionBar().hide();
+        }
+        else {
+            Log.d(LOG_TAG, "portrait orientation, showing action bar");
+            getSupportActionBar().show();
+        }
     }
 
     @Override
