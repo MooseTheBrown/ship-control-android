@@ -19,7 +19,7 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_controlFragment_to_settingsFragment2">
+                            <entry key="action_controlFragment_to_settingsFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -89,6 +89,18 @@
                               </value>
                             </entry>
                           </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="videoControlFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="792" />
+                            <option name="y" value="-25" />
+                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>

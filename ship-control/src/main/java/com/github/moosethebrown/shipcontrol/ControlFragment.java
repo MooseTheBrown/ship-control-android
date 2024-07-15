@@ -12,13 +12,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 
 /**
@@ -31,6 +30,7 @@ public class ControlFragment extends Fragment {
     private ShipControl shipControl = null;
     private Handler handler = null;
     private ControlSettingsProvider settingsProvider = null;
+    private ControlFragmentListener listener = null;
 
     public ControlFragment() {
     }
@@ -118,6 +118,14 @@ public class ControlFragment extends Fragment {
             }
         });
 
+        // video mode button
+        Button videoModeButton = view.findViewById(R.id.videoModeButton);
+        videoModeButton.setOnClickListener(v -> {
+            if (listener!= null) {
+                listener.onVideoButtonClicked();
+            }
+        });
+
         return view;
     }
 
@@ -155,6 +163,12 @@ public class ControlFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement ControlSettingsProvider");
         }
+        if (context instanceof ControlFragmentListener) {
+            listener = (ControlFragmentListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement ControlFragmentListener");
+        }
     }
 
     @Override
@@ -164,6 +178,10 @@ public class ControlFragment extends Fragment {
 
     public interface ControlSettingsProvider {
         long getQueryTimeout();
+    }
+
+    public interface ControlFragmentListener {
+        void onVideoButtonClicked();
     }
 
     private void setCurrentSpeed(final String currentSpeed) {

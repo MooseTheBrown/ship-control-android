@@ -9,6 +9,7 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/anchor"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/ShipControlTheme">
         <activity android:name="com.github.moosethebrown.shipcontrol.MainActivity" android:exported="true">
             <intent-filter>

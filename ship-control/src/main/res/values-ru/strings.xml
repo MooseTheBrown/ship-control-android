@@ -25,4 +25,5 @@
     <string name="mqttSettings">Настройки MQTT</string>
     <string name="controllerSettings">Настройки контроллера</string>
     <string name="useTwoJoysticks">Использовать два джойстика</string>
+    <string name="videoMode">Видео режим</string>
 </resources>

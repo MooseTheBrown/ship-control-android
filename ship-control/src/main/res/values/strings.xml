@@ -24,4 +24,5 @@
     <string name="mqttSettings">MQTT settings</string>
     <string name="controllerSettings">Controller settings</string>
     <string name="useTwoJoysticks">Use two joysticks</string>
+    <string name="videoMode">Video mode</string>
 </resources>

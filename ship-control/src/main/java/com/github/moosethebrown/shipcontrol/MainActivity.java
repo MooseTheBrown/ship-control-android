@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity
                ShipSelectFragment.OnListFragmentInteractionListener,
                SharedPreferences.OnSharedPreferenceChangeListener,
                ControlFragment.ControlSettingsProvider,
+               ControlFragment.ControlFragmentListener,
                RestartFragment.Listener {
 
     public static final String LOG_TAG = "ship-control.MainActivity";
@@ -149,6 +150,15 @@ public class MainActivity extends AppCompatActivity
         return timeout;
     }
     // end of ControlFragment.ControlSettingsProvider implementation
+
+    // ControlFragment.ControlFragmentListener implementation
+    @Override
+    public void onVideoButtonClicked() {
+        // navigate to video control fragment
+        Navigation.findNavController(this, R.id.nav_fragment).
+                navigate(R.id.action_controlFragment_to_videoControlFragment);
+    }
+    // end of ControlFragment.ControlFragmentListener implementation
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
