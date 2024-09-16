@@ -25,4 +25,6 @@
     <string name="controllerSettings">Controller settings</string>
     <string name="useTwoJoysticks">Use two joysticks</string>
     <string name="videoMode">Video mode</string>
+    <string name="videoSettings">Video settings</string>
+    <string name="videoStreamUri">Video stream URI</string>
 </resources>

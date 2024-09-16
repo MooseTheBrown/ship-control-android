@@ -39,4 +39,12 @@
             android:key="controllerTwoJoysticks"
             android:title="@string/useTwoJoysticks" />
     </PreferenceCategory>
+    <PreferenceCategory android:title="@string/videoSettings">
+        <EditTextPreference
+            android:id="@+id/videoStreamUri"
+            android:defaultValue="http://moosethebrown.ru/10080"
+            android:key="videoStreamUri"
+            android:singleLine="true"
+            android:title="@string/videoStreamUri" />
+    </PreferenceCategory>
 </PreferenceScreen>

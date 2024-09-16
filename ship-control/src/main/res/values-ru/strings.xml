@@ -26,4 +26,6 @@
     <string name="controllerSettings">Настройки контроллера</string>
     <string name="useTwoJoysticks">Использовать два джойстика</string>
     <string name="videoMode">Видео режим</string>
+    <string name="videoSettings">Настройки видео</string>
+    <string name="videoStreamUri">URI видео потока</string>
 </resources>

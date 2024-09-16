@@ -32,7 +32,8 @@ public class MainActivity extends AppCompatActivity
                SharedPreferences.OnSharedPreferenceChangeListener,
                ControlFragment.ControlSettingsProvider,
                ControlFragment.ControlFragmentListener,
-               RestartFragment.Listener {
+               RestartFragment.Listener,
+               VideoControlFragment.VideoSettingsProvider {
 
     public static final String LOG_TAG = "ship-control.MainActivity";
     private static final String PREFS_BROKER_URI_KEY = "brokerURI";
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity
     private static final String PREFS_BROKER_PASSWORD_KEY = "brokerPassword";
     private static final String PREFS_QUERY_TIMEOUT_KEY = "queryTimeout";
     private static final String PREFS_USE_TWO_JOYSTICKS_KEY = "controllerTwoJoysticks";
+    private static final String PREFS_VIDEO_STREAM_URI_KEY = "videoStreamUri";
 
     private ShipViewModel viewModel = null;
     private Handler handler = null;
@@ -159,6 +161,14 @@ public class MainActivity extends AppCompatActivity
                 navigate(R.id.action_controlFragment_to_videoControlFragment);
     }
     // end of ControlFragment.ControlFragmentListener implementation
+
+    // VideoControlFragment.VideoSettingsProvider implementation
+    @Override
+    public String getVideoStreamUri() {
+        return PreferenceManager.getDefaultSharedPreferences(this)
+                .getString(PREFS_VIDEO_STREAM_URI_KEY, "");
+    }
+    // end of VideoControlFragment.VideoSettingsProvider implementation
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
