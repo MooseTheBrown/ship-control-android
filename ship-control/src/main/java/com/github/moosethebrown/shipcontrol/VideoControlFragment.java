@@ -2,28 +2,22 @@ package com.github.moosethebrown.shipcontrol;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.OptIn;
 import androidx.fragment.app.Fragment;
-import androidx.media3.common.MediaItem;
-import androidx.media3.common.util.UnstableApi;
-import androidx.media3.exoplayer.DefaultLoadControl;
-import androidx.media3.exoplayer.ExoPlayer;
-import androidx.media3.exoplayer.LoadControl;
-import androidx.media3.ui.PlayerView;
+import com.alexvas.rtsp.widget.RtspSurfaceView;
 
 public class VideoControlFragment extends Fragment {
 
     private static final String LOG_TAG = "VideoControlFragment";
 
-    private ExoPlayer player = null;
-
     private VideoSettingsProvider settingsProvider = null;
+    private RtspSurfaceView rtspSurfaceView=  null;
 
     public interface VideoSettingsProvider {
         String getVideoStreamUri();
@@ -41,6 +35,8 @@ public class VideoControlFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_video_control, container, false);
+
+        rtspSurfaceView = (RtspSurfaceView)view.findViewById(R.id.player_view);
 
         return view;
     }
@@ -62,27 +58,15 @@ public class VideoControlFragment extends Fragment {
         settingsProvider = null;
     }
 
-    @OptIn(markerClass = UnstableApi.class)
     @Override
     public void onStart() {
         super.onStart();
 
         Log.d(LOG_TAG, "onStart()");
 
-        LoadControl loadControl = new DefaultLoadControl.Builder().
-                setBufferDurationsMs(10, 20, 10, 0).
-                build();
-        player = new ExoPlayer.Builder(getContext()).
-                setLoadControl(loadControl).
-                build();
-        PlayerView playerView = getView().findViewById(R.id.player_view);
-        playerView.setPlayer(player);
-        MediaItem mediaItem = new MediaItem.Builder().
-                setUri(settingsProvider.getVideoStreamUri()).
-                build();
-        player.setMediaItem(mediaItem);
-        player.prepare();
-        player.play();
+        Uri uri = Uri.parse(settingsProvider.getVideoStreamUri());
+        rtspSurfaceView.init(uri, null, null, null);
+        rtspSurfaceView.start(true, false, false);
     }
 
     @Override
@@ -108,8 +92,6 @@ public class VideoControlFragment extends Fragment {
         super.onStop();
 
         Log.d(LOG_TAG, "onStop()");
-
-        player.release();
-        player = null;
+        rtspSurfaceView.stop();
     }
 }

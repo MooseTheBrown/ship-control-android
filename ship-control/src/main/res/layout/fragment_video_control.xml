@@ -5,13 +5,9 @@
     android:keepScreenOn="true"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.media3.ui.PlayerView
-        android:id="@+id/player_view"
+    <com.alexvas.rtsp.widget.RtspSurfaceView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:use_controller="false"
-        app:show_buffering="when_playing"
-        app:surface_type="surface_view"
-    />
+        android:id="@+id/player_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
