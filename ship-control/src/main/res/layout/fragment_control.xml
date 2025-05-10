@@ -78,6 +78,28 @@
             app:layout_constraintLeft_toRightOf="@+id/steeringCaption"
             app:layout_constraintTop_toTopOf="@+id/steeringCaption" />
 
+        <TextView
+            android:id="@+id/gpsSpeedCaption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/gpsSpeed"
+            android:textColor="?android:attr/colorForeground"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/steeringCaption" />
+
+        <TextView
+            android:id="@+id/gpsSpeed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:textColor="?android:attr/colorForeground"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toRightOf="@+id/gpsSpeedCaption"
+            app:layout_constraintTop_toTopOf="@+id/gpsSpeedCaption" />
+
         <View
             android:id="@+id/dividerControls"
             android:layout_width="0dp"
@@ -86,7 +108,7 @@
             android:background="?android:attr/colorForeground"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/steeringCaption" />
+            app:layout_constraintTop_toBottomOf="@+id/gpsSpeedCaption" />
 
         <TextView
             android:id="@+id/controlsCaption"

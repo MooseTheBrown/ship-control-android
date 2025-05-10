@@ -23,6 +23,12 @@ public class ShipViewModel extends ViewModel implements ShipCallback {
     // currently connected ship
     private MutableLiveData<String> currentShipId = new MutableLiveData<>();
     // connected ship data
+    private MutableLiveData<Integer> numSatellites = new MutableLiveData<>();
+    private MutableLiveData<Double> latitude = new MutableLiveData<>();
+    private MutableLiveData<Double> longitude = new MutableLiveData<>();
+    private MutableLiveData<Double> speedKnots = new MutableLiveData<>();
+    private MutableLiveData<Double> speedKm = new MutableLiveData<>();
+    private MutableLiveData<Double> angle = new MutableLiveData<>();
     private MutableLiveData<String> currentSpeed = new MutableLiveData<>();
     private MutableLiveData<String> currentSteering = new MutableLiveData<>();
     // last error reported by ShipHandler
@@ -58,6 +64,18 @@ public class ShipViewModel extends ViewModel implements ShipCallback {
     public LiveData<String> getCurrentShipId() {
         return currentShipId;
     }
+
+    public LiveData<Integer> getNumSatellites() { return numSatellites; }
+
+    public LiveData<Double> getLatitude() { return latitude; }
+
+    public LiveData<Double> getLongitude() { return longitude; }
+
+    public LiveData<Double> getSpeedKm() { return speedKm; }
+
+    public LiveData<Double> getSpeedKnots() { return speedKnots; }
+
+    public LiveData<Double> getAngle() { return angle; }
 
     public LiveData<String> getCurrentSpeed() {
         return currentSpeed;
@@ -112,8 +130,14 @@ public class ShipViewModel extends ViewModel implements ShipCallback {
 
     @Override
     public void onQueryResponse(ShipQueryResponse response) {
-        currentSpeed.postValue(response.getSpeed());
-        currentSteering.postValue(response.getSteering());
+        numSatellites.postValue(response.getPositionData().getNumSatellites());
+        latitude.postValue(response.getPositionData().getLatitude());
+        longitude.postValue(response.getPositionData().getLongitude());
+        speedKnots.postValue(response.getPositionData().getSpeedKnots());
+        speedKm.postValue(response.getPositionData().getSpeedKm());
+        angle.postValue(response.getPositionData().getAngle());
+        currentSpeed.postValue(response.getShipData().getSpeed());
+        currentSteering.postValue(response.getShipData().getSteering());
     }
 
     @Override

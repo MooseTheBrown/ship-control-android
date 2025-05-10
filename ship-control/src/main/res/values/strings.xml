@@ -24,7 +24,9 @@
     <string name="mqttSettings">MQTT settings</string>
     <string name="controllerSettings">Controller settings</string>
     <string name="useTwoJoysticks">Use two joysticks</string>
-    <string name="videoMode">Video mode</string>
+    <string name="videoMode">Video</string>
     <string name="videoSettings">Video settings</string>
     <string name="videoStreamUri">Video stream URI</string>
+    <string name="gpsSpeed">GPS speed:</string>
+    <string name="kmh">km/h</string>
 </resources>

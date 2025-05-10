@@ -25,7 +25,9 @@
     <string name="mqttSettings">Настройки MQTT</string>
     <string name="controllerSettings">Настройки контроллера</string>
     <string name="useTwoJoysticks">Использовать два джойстика</string>
-    <string name="videoMode">Видео режим</string>
+    <string name="videoMode">Видео</string>
     <string name="videoSettings">Настройки видео</string>
     <string name="videoStreamUri">URI видео потока</string>
+    <string name="gpsSpeed">скорость GPS:</string>
+    <string name="kmh">км/ч</string>
 </resources>

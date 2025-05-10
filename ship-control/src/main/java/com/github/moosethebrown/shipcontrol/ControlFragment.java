@@ -1,5 +1,6 @@
 package com.github.moosethebrown.shipcontrol;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -143,6 +144,10 @@ public class ControlFragment extends Fragment {
         final String curSteering = viewModel.getCurrentSteering().getValue();
         setCurrentSteering(curSteering);
         viewModel.getCurrentSteering().observe(this, this::setCurrentSteering);
+        // gps speed
+        final Double gpsSpeed = viewModel.getSpeedKm().getValue();
+        setGpsSpeed(gpsSpeed);
+        viewModel.getSpeedKm().observe(this, this::setGpsSpeed);
 
         // start periodic queries
         startQueryTimer();
@@ -212,6 +217,15 @@ public class ControlFragment extends Fragment {
                 steeringBar.setProgress(steeringEntry.getKey().intValue(), false);
             }
         }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void setGpsSpeed(final Double gpsSpeed) {
+        if (gpsSpeed == null) {
+            return;
+        }
+        TextView gpsSpeedView = getView().findViewById(R.id.gpsSpeed);
+        gpsSpeedView.setText(gpsSpeed.toString() + " " + getResources().getString(R.string.kmh));
     }
 
     private void startQueryTimer() {

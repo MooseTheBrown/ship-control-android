@@ -118,7 +118,7 @@ public class ShipWorker extends Thread implements MqttCallback {
                 ShipCmdResponse resp = gson.fromJson(msg, ShipCmdResponse.class);
                 callback.onCommandResponse(resp);
             }
-            else if (msg.contains("speed")) {
+            else if (msg.contains("positionData")) {
                 ShipQueryResponse resp = gson.fromJson(msg, ShipQueryResponse.class);
                 callback.onQueryResponse(resp);
             }
@@ -177,8 +177,8 @@ public class ShipWorker extends Thread implements MqttCallback {
             }
 
             this.shipId = shipId;
-            rqTopic = new StringBuilder("ship/").append(shipId).append("/request").toString();
-            respTopic = new StringBuilder("ship/").append(shipId).append("/response").toString();
+            rqTopic = "ship/" + shipId + "/request";
+            respTopic = "ship/" + shipId + "/response";
             mqttClient.subscribe(respTopic, 2);
 
             Log.i(LOG_TAG, "ShipWorker connected to ship " + shipId);
