@@ -18,6 +18,8 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Map;
 
 
@@ -144,10 +146,30 @@ public class ControlFragment extends Fragment {
         final String curSteering = viewModel.getCurrentSteering().getValue();
         setCurrentSteering(curSteering);
         viewModel.getCurrentSteering().observe(this, this::setCurrentSteering);
-        // gps speed
+        // num satellites
+        final Integer numSatellites = viewModel.getNumSatellites().getValue();
+        setNumSatellites(numSatellites);
+        viewModel.getNumSatellites().observe(this, this::setNumSatellites);
+        // gps speed in kmh
         final Double gpsSpeed = viewModel.getSpeedKm().getValue();
         setGpsSpeed(gpsSpeed);
         viewModel.getSpeedKm().observe(this, this::setGpsSpeed);
+        // gps speed in knots
+        final Double gpsSpeedKnots = viewModel.getSpeedKnots().getValue();
+        setGpsSpeedKnots(gpsSpeedKnots);
+        viewModel.getSpeedKnots().observe(this, this::setGpsSpeedKnots);
+        // latitude
+        final Double latitude = viewModel.getLatitude().getValue();
+        setLatitude(latitude);
+        viewModel.getLatitude().observe(this, this::setLatitude);
+        // longitude
+        final Double longitude = viewModel.getLongitude().getValue();
+        setLongitude(longitude);
+        viewModel.getLongitude().observe(this, this::setLongitude);
+        // angle
+        final Double angle = viewModel.getAngle().getValue();
+        setAngle(angle);
+        viewModel.getAngle().observe(this, this::setAngle);
 
         // start periodic queries
         startQueryTimer();
@@ -224,8 +246,58 @@ public class ControlFragment extends Fragment {
         if (gpsSpeed == null) {
             return;
         }
+        Double roundedGpsSpeed = round(gpsSpeed, 1);
         TextView gpsSpeedView = getView().findViewById(R.id.gpsSpeed);
-        gpsSpeedView.setText(gpsSpeed.toString() + " " + getResources().getString(R.string.kmh));
+        gpsSpeedView.setText(roundedGpsSpeed.toString() + " " + getResources().getString(R.string.kmh));
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void setGpsSpeedKnots(final Double gpsSpeed) {
+        if (gpsSpeed == null) {
+            return;
+        }
+        Double roundedGpsSpeed = round(gpsSpeed, 1);
+        TextView gpsSpeedView = getView().findViewById(R.id.gpsSpeedKnots);
+        gpsSpeedView.setText(roundedGpsSpeed.toString() + " " + getResources().getString(R.string.knots));
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void setNumSatellites(final Integer numSatellites) {
+        if (numSatellites == null) {
+            return;
+        }
+        TextView numSatellitesView = getView().findViewById(R.id.numSatellites);
+        numSatellitesView.setText(numSatellites.toString());
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void setLatitude(final Double latitude) {
+        if (latitude == null) {
+            return;
+        }
+        Double roundedLatitude = round(latitude, 6);
+        TextView latitudeView = getView().findViewById(R.id.latitude);
+        latitudeView.setText(roundedLatitude.toString() + getResources().getString(R.string.degrees));
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void setLongitude(final Double longitude) {
+        if (longitude == null) {
+            return;
+        }
+        Double roundedLongitude = round(longitude, 6);
+        TextView longitudeView = getView().findViewById(R.id.longitude);
+        longitudeView.setText(roundedLongitude.toString() + getResources().getString(R.string.degrees));
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void setAngle(final Double angle) {
+        if (angle == null) {
+            return;
+        }
+        Double roundedAngle = round(angle, 4);
+        TextView angleView = getView().findViewById(R.id.angle);
+        angleView.setText(roundedAngle.toString() + getResources().getString(R.string.degrees));
     }
 
     private void startQueryTimer() {
@@ -244,5 +316,15 @@ public class ControlFragment extends Fragment {
         if (handler != null) {
             handler.removeCallbacksAndMessages(null);
         }
+    }
+
+    private Double round(Double value, int precision) {
+        if (value == null) {
+            return null;
+        }
+
+        BigDecimal bigDecimal = BigDecimal.valueOf(value);
+        bigDecimal = bigDecimal.setScale(precision, RoundingMode.HALF_UP);
+        return bigDecimal.doubleValue();
     }
 }

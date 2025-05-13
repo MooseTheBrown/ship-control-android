@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/controlLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
         android:keepScreenOn="true"
         tools:context=".ControlFragment">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/verticalHalfGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
 
         <View
             android:id="@+id/dividerCurrent"
@@ -30,7 +37,7 @@
             android:layout_height="wrap_content"
             android:text="@string/curDataHeaderValue"
             android:textColor="?android:attr/colorForeground"
-            android:textSize="24sp"
+            android:textSize="20sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dividerCurrent" />
 
@@ -39,10 +46,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:text="@string/speedCaptionValue"
             android:textColor="?android:attr/colorForeground"
-            android:textSize="18sp"
+            android:textSize="12sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/curDataHeader" />
 
@@ -50,9 +57,9 @@
             android:id="@+id/speed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
             android:textColor="?android:attr/colorForeground"
-            android:textSize="18sp"
+            android:textSize="12sp"
             app:layout_constraintLeft_toRightOf="@+id/speedCaption"
             app:layout_constraintTop_toTopOf="@+id/speedCaption" />
 
@@ -61,10 +68,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:text="@string/steeringCaptionValue"
             android:textColor="?android:attr/colorForeground"
-            android:textSize="18sp"
+            android:textSize="12sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/speedCaption" />
 
@@ -72,33 +79,143 @@
             android:id="@+id/steering"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
             android:textColor="?android:attr/colorForeground"
-            android:textSize="18sp"
+            android:textSize="12sp"
             app:layout_constraintLeft_toRightOf="@+id/steeringCaption"
             app:layout_constraintTop_toTopOf="@+id/steeringCaption" />
+
+        <TextView
+            android:id="@+id/numSatellitesCaption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/satellites"
+            android:textColor="?android:attr/colorForeground"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/steeringCaption" />
+
+        <TextView
+            android:id="@+id/numSatellites"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textColor="?android:attr/colorForeground"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toRightOf="@+id/numSatellitesCaption"
+            app:layout_constraintTop_toTopOf="@+id/numSatellitesCaption" />
 
         <TextView
             android:id="@+id/gpsSpeedCaption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:text="@string/gpsSpeed"
             android:textColor="?android:attr/colorForeground"
-            android:textSize="18sp"
+            android:textSize="12sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/steeringCaption" />
+            app:layout_constraintTop_toBottomOf="@+id/numSatellitesCaption" />
 
         <TextView
             android:id="@+id/gpsSpeed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
             android:textColor="?android:attr/colorForeground"
-            android:textSize="18sp"
+            android:textSize="12sp"
             app:layout_constraintLeft_toRightOf="@+id/gpsSpeedCaption"
             app:layout_constraintTop_toTopOf="@+id/gpsSpeedCaption" />
+
+        <TextView
+            android:id="@+id/gpsSpeedKnotsCaption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/gpsSpeed"
+            android:textColor="?android:attr/colorForeground"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="@+id/verticalHalfGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/curDataHeader" />
+
+        <TextView
+            android:id="@+id/gpsSpeedKnots"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textColor="?android:attr/colorForeground"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toRightOf="@+id/gpsSpeedKnotsCaption"
+            app:layout_constraintTop_toTopOf="@+id/gpsSpeedKnotsCaption" />
+
+        <TextView
+            android:id="@+id/latitudeCaption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/latitude"
+            android:textColor="?android:attr/colorForeground"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="@+id/verticalHalfGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/gpsSpeedKnotsCaption" />
+
+        <TextView
+            android:id="@+id/latitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textColor="?android:attr/colorForeground"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toRightOf="@+id/latitudeCaption"
+            app:layout_constraintTop_toTopOf="@+id/latitudeCaption" />
+
+        <TextView
+            android:id="@+id/longitudeCaption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/longitude"
+            android:textColor="?android:attr/colorForeground"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="@+id/verticalHalfGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/latitudeCaption" />
+
+        <TextView
+            android:id="@+id/longitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textColor="?android:attr/colorForeground"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toRightOf="@+id/longitudeCaption"
+            app:layout_constraintTop_toTopOf="@+id/longitudeCaption" />
+
+        <TextView
+            android:id="@+id/angleCaption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/bearingAngle"
+            android:textColor="?android:attr/colorForeground"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="@+id/verticalHalfGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/longitudeCaption" />
+
+        <TextView
+            android:id="@+id/angle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textColor="?android:attr/colorForeground"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toRightOf="@+id/angleCaption"
+            app:layout_constraintTop_toTopOf="@+id/angleCaption" />
 
         <View
             android:id="@+id/dividerControls"
@@ -117,7 +234,7 @@
             android:layout_marginStart="10dp"
             android:text="@string/controlsCaptionValue"
             android:textColor="?android:attr/colorForeground"
-            android:textSize="24sp"
+            android:textSize="20sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dividerControls" />
 

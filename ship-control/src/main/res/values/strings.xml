@@ -29,4 +29,10 @@
     <string name="videoStreamUri">Video stream URI</string>
     <string name="gpsSpeed">GPS speed:</string>
     <string name="kmh">km/h</string>
+    <string name="satellites">satellites:</string>
+    <string name="latitude">latitude:</string>
+    <string name="longitude">longitude:</string>
+    <string name="bearingAngle">angle:</string>
+    <string name="knots">kt</string>
+    <string name="degrees">°</string>
 </resources>

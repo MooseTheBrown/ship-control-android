@@ -30,4 +30,10 @@
     <string name="videoStreamUri">URI видео потока</string>
     <string name="gpsSpeed">скорость GPS:</string>
     <string name="kmh">км/ч</string>
+    <string name="satellites">спутники:</string>
+    <string name="latitude">широта:</string>
+    <string name="longitude">долгота:</string>
+    <string name="bearingAngle">угол:</string>
+    <string name="knots">уз</string>
+    <string name="degrees">°</string>
 </resources>
