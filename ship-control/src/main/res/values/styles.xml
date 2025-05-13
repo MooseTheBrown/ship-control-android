@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <style name="ShipControlTheme" parent="Theme.AppCompat" >
-        <item name="android:windowBackground">@drawable/water</item>
-    </style>
-</resources>

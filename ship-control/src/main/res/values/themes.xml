@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="ShipControlTheme" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="android:windowOptOutEdgeToEdgeEnforcement" tools:targetApi="35">true</item>
+        <!-- app background -->
+        <item name="android:windowBackground">@drawable/water</item>
+        <item name="colorPrimary">#000000</item>
+        <item name="colorPrimaryVariant">#291605</item>
+        <item name="colorOnPrimary">#ffffff</item>
+        <!-- action mode -->
+        <item name="windowActionModeOverlay">true</item>
+        <!-- dialogs -->
+        <item name="alertDialogTheme">@style/DialogTheme</item>
+        <item name="android:alertDialogTheme">?alertDialogTheme</item>
+        <item name="dialogTheme">?alertDialogTheme</item>
+        <item name="android:dialogTheme">?alertDialogTheme</item>
+    </style>
+
+    <style name="DialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/dialog_background</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:buttonBarButtonStyle">@style/DialogButtonBarStyle</item>
+    </style>
+
+    <style name="DialogButtonBarStyle" parent="Widget.AppCompat.ButtonBar.AlertDialog">
+        <item name="android:textColor">?colorOnPrimary</item>
+    </style>
+
+</resources>

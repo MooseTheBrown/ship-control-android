@@ -15,10 +15,12 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.preference.PreferenceManager;
@@ -75,14 +77,14 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_fragment);
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return (navController.navigateUp() || super.onSupportNavigateUp());
     }
 
     // StartFragment.Listener implementation
     @Override
     public void onConnected(boolean already) {
-        NavController controller = Navigation.findNavController(this, R.id.nav_fragment);
+        NavController controller = Navigation.findNavController(this, R.id.nav_host_fragment);
 
         boolean useTwoJoysticks = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(PREFS_USE_TWO_JOYSTICKS_KEY, true);
         Log.d(LOG_TAG, "initializing controller handler, useTwoJoysticks = " + useTwoJoysticks);
@@ -132,7 +134,7 @@ public class MainActivity extends AppCompatActivity
         viewModel.setCurrentShipId(shipId);
 
         // navigate to control fragment
-        Navigation.findNavController(this, R.id.nav_fragment).
+        Navigation.findNavController(this, R.id.nav_host_fragment).
             navigate(R.id.action_shipSelectFragment_to_controlFragment);
     }
     // end of ShipSelectFragment.OnListFragmentInteractionListener implementation
@@ -157,7 +159,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onVideoButtonClicked() {
         // navigate to video control fragment
-        Navigation.findNavController(this, R.id.nav_fragment).
+        Navigation.findNavController(this, R.id.nav_host_fragment).
                 navigate(R.id.action_controlFragment_to_videoControlFragment);
     }
     // end of ControlFragment.ControlFragmentListener implementation
@@ -194,7 +196,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.settingsMenuItem) {
-            Navigation.findNavController(this, R.id.nav_fragment).
+            Navigation.findNavController(this, R.id.nav_host_fragment).
                     navigate(R.id.settingsFragment);
         }
 
@@ -237,9 +239,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setupNavigationUI() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_fragment);
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.startFragment, R.id.shipSelectFragment).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        NavController navController = navHostFragment.getNavController();
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+        final Toolbar toolbar = findViewById(R.id.app_toolbar);
+        setSupportActionBar(toolbar);
         navController.addOnDestinationChangedListener(
                 (NavController controller, NavDestination destination, Bundle args) -> {
             if (destination.getId() == R.id.shipSelectFragment) {
@@ -252,5 +256,6 @@ public class MainActivity extends AppCompatActivity
                 getSupportActionBar().setTitle(R.string.settingsTitle);
             }
         });
+        NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
     }
 }
