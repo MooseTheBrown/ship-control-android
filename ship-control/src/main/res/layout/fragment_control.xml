@@ -326,5 +326,18 @@
             android:textSize="18sp"
             android:text="@string/videoMode"
             />
+
+        <Button
+            android:id="@+id/mapButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/videoModeButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="20dp"
+            android:textSize="18sp"
+            android:text="@string/map"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

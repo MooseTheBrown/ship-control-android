@@ -35,4 +35,5 @@
     <string name="bearingAngle">angle:</string>
     <string name="knots">kt</string>
     <string name="degrees">°</string>
+    <string name="map">map</string>
 </resources>

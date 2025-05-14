@@ -36,4 +36,5 @@
     <string name="bearingAngle">угол:</string>
     <string name="knots">уз</string>
     <string name="degrees">°</string>
+    <string name="map">карта</string>
 </resources>

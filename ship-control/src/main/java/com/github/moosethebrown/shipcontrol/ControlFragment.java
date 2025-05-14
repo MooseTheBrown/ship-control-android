@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import com.github.moosethebrown.shipcontrol.data.ShipControl;
 import com.github.moosethebrown.shipcontrol.data.ShipViewModel;
+import com.github.moosethebrown.shipcontrol.data.Waypoint;
 
 import android.os.Handler;
 import android.util.Log;
@@ -129,6 +130,14 @@ public class ControlFragment extends Fragment {
             }
         });
 
+        // map button
+        Button mapButton = view.findViewById(R.id.mapButton);
+        mapButton.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onMapButtonClicked();
+            }
+        });
+
         return view;
     }
 
@@ -158,14 +167,10 @@ public class ControlFragment extends Fragment {
         final Double gpsSpeedKnots = viewModel.getSpeedKnots().getValue();
         setGpsSpeedKnots(gpsSpeedKnots);
         viewModel.getSpeedKnots().observe(this, this::setGpsSpeedKnots);
-        // latitude
-        final Double latitude = viewModel.getLatitude().getValue();
-        setLatitude(latitude);
-        viewModel.getLatitude().observe(this, this::setLatitude);
-        // longitude
-        final Double longitude = viewModel.getLongitude().getValue();
-        setLongitude(longitude);
-        viewModel.getLongitude().observe(this, this::setLongitude);
+        // ship position
+        final Waypoint shipPosition = viewModel.getShipPosition().getValue();
+        setShipPosition(shipPosition);
+        viewModel.getShipPosition().observe(this, this::setShipPosition);
         // angle
         final Double angle = viewModel.getAngle().getValue();
         setAngle(angle);
@@ -209,6 +214,7 @@ public class ControlFragment extends Fragment {
 
     public interface ControlFragmentListener {
         void onVideoButtonClicked();
+        void onMapButtonClicked();
     }
 
     private void setCurrentSpeed(final String currentSpeed) {
@@ -271,23 +277,17 @@ public class ControlFragment extends Fragment {
     }
 
     @SuppressLint("SetTextI18n")
-    private void setLatitude(final Double latitude) {
-        if (latitude == null) {
+    private void setShipPosition(final Waypoint newPosition) {
+        if (newPosition == null) {
             return;
         }
-        Double roundedLatitude = round(latitude, 6);
+        double roundedLatitude = round(newPosition.getLatitude(), 6);
         TextView latitudeView = getView().findViewById(R.id.latitude);
-        latitudeView.setText(roundedLatitude.toString() + getResources().getString(R.string.degrees));
-    }
+        latitudeView.setText(roundedLatitude + getResources().getString(R.string.degrees));
 
-    @SuppressLint("SetTextI18n")
-    private void setLongitude(final Double longitude) {
-        if (longitude == null) {
-            return;
-        }
-        Double roundedLongitude = round(longitude, 6);
+        double roundedLongitude = round(newPosition.getLongitude(), 6);
         TextView longitudeView = getView().findViewById(R.id.longitude);
-        longitudeView.setText(roundedLongitude.toString() + getResources().getString(R.string.degrees));
+        longitudeView.setText(roundedLongitude + getResources().getString(R.string.degrees));
     }
 
     @SuppressLint("SetTextI18n")
@@ -318,11 +318,7 @@ public class ControlFragment extends Fragment {
         }
     }
 
-    private Double round(Double value, int precision) {
-        if (value == null) {
-            return null;
-        }
-
+    private double round(double value, int precision) {
         BigDecimal bigDecimal = BigDecimal.valueOf(value);
         bigDecimal = bigDecimal.setScale(precision, RoundingMode.HALF_UP);
         return bigDecimal.doubleValue();

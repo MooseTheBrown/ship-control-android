@@ -27,6 +27,8 @@ import androidx.preference.PreferenceManager;
 
 import com.github.moosethebrown.shipcontrol.data.ShipViewModel;
 
+import org.maplibre.android.MapLibre;
+
 public class MainActivity extends AppCompatActivity
     implements StartFragment.Listener,
                StartFragment.ConnectionSettingsProvider,
@@ -52,6 +54,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        MapLibre.getInstance(this);
 
         viewModel = ViewModelProviders.of(this).get(ShipViewModel.class);
 
@@ -161,6 +165,13 @@ public class MainActivity extends AppCompatActivity
         // navigate to video control fragment
         Navigation.findNavController(this, R.id.nav_host_fragment).
                 navigate(R.id.action_controlFragment_to_videoControlFragment);
+    }
+
+    @Override
+    public void onMapButtonClicked() {
+        // navigate to map fragment
+        Navigation.findNavController(this, R.id.nav_host_fragment).
+                navigate(R.id.action_controlFragment_to_mapFragment);
     }
     // end of ControlFragment.ControlFragmentListener implementation
 
