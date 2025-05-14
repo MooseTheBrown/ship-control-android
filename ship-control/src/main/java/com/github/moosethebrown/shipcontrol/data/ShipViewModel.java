@@ -24,8 +24,7 @@ public class ShipViewModel extends ViewModel implements ShipCallback {
     private MutableLiveData<String> currentShipId = new MutableLiveData<>();
     // connected ship data
     private MutableLiveData<Integer> numSatellites = new MutableLiveData<>();
-    private MutableLiveData<Double> latitude = new MutableLiveData<>();
-    private MutableLiveData<Double> longitude = new MutableLiveData<>();
+    private MutableLiveData<Waypoint> shipPosition = new MutableLiveData<>();
     private MutableLiveData<Double> speedKnots = new MutableLiveData<>();
     private MutableLiveData<Double> speedKm = new MutableLiveData<>();
     private MutableLiveData<Double> angle = new MutableLiveData<>();
@@ -67,9 +66,7 @@ public class ShipViewModel extends ViewModel implements ShipCallback {
 
     public LiveData<Integer> getNumSatellites() { return numSatellites; }
 
-    public LiveData<Double> getLatitude() { return latitude; }
-
-    public LiveData<Double> getLongitude() { return longitude; }
+    public LiveData<Waypoint> getShipPosition() { return shipPosition; }
 
     public LiveData<Double> getSpeedKm() { return speedKm; }
 
@@ -131,8 +128,8 @@ public class ShipViewModel extends ViewModel implements ShipCallback {
     @Override
     public void onQueryResponse(ShipQueryResponse response) {
         numSatellites.postValue(response.getPositionData().getNumSatellites());
-        latitude.postValue(response.getPositionData().getLatitude());
-        longitude.postValue(response.getPositionData().getLongitude());
+        shipPosition.postValue(new Waypoint(response.getPositionData().getLatitude(),
+                response.getPositionData().getLongitude()));
         speedKnots.postValue(response.getPositionData().getSpeedKnots());
         speedKm.postValue(response.getPositionData().getSpeedKm());
         angle.postValue(response.getPositionData().getAngle());

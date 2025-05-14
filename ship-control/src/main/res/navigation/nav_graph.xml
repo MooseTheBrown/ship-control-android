@@ -56,6 +56,9 @@
         <action
             android:id="@+id/action_controlFragment_to_videoControlFragment"
             app:destination="@id/videoControlFragment" />
+        <action
+            android:id="@+id/action_controlFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -65,4 +68,8 @@
         android:id="@+id/videoControlFragment"
         android:name="com.github.moosethebrown.shipcontrol.VideoControlFragment"
         />
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.github.moosethebrown.shipcontrol.MapFragment"
+        android:label="MapFragment" />
 </navigation>
