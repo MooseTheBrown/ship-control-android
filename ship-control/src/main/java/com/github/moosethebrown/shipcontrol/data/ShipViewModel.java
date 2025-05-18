@@ -37,6 +37,10 @@ public class ShipViewModel extends ViewModel implements ShipCallback {
     private ShipHandler shipHandler = null;
 
     public ShipViewModel() {
+        numSatellites.setValue(0);
+        speedKnots.setValue(0.0);
+        speedKm.setValue(0.0);
+        angle.setValue(0.0);
         connected.setValue(false);
     }
 
