@@ -37,4 +37,7 @@
     <string name="knots">уз</string>
     <string name="degrees">°</string>
     <string name="map">карта</string>
+    <string name="mapTitle">Карта</string>
+    <string name="startCalibration">калибровать</string>
+    <string name="stopCalibration">ост. калибр.</string>
 </resources>

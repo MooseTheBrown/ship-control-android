@@ -13,6 +13,8 @@ public interface ShipControl {
     void setSteering(String steering) throws IllegalStateException;
     // value range: -10:10, 0 means "straight"
     void setSteering(int steering) throws IllegalStateException;
+    void startCalibration() throws IllegalStateException;
+    void stopCalibration() throws IllegalStateException;
     void query() throws IllegalStateException;
     Map<Integer, String> getSpeedMap();
     Map<Integer, String> getSteeringMap();

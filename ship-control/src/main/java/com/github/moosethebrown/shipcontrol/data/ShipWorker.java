@@ -164,7 +164,7 @@ public class ShipWorker extends Thread implements MqttCallback {
         }
         catch (Exception e) {
             // just log it, app is unlikely to be interested
-            Log.e(LOG_TAG, "ShipWorker failed to disconnect from broker: " + e.getMessage());
+            Log.e(LOG_TAG, "ShipWorker failed to disconnect from broker", e);
         }
     }
 
@@ -201,7 +201,7 @@ public class ShipWorker extends Thread implements MqttCallback {
             Log.i(LOG_TAG, "ShipWorker sent request to ship:\n" + msg);
         }
         catch (Exception e) {
-            Log.e(LOG_TAG, "ShipWorker failed to send request to ship: " + e.getMessage());
+            Log.e(LOG_TAG, "ShipWorker failed to send request to ship", e);
             callback.onError(e);
         }
     }

@@ -32,6 +32,8 @@ public class ShipViewModel extends ViewModel implements ShipCallback {
     private MutableLiveData<String> currentSteering = new MutableLiveData<>();
     // last error reported by ShipHandler
     private MutableLiveData<Throwable> lastError = new MutableLiveData<>();
+    // ship calibration status
+    private MutableLiveData<Boolean> calibrating = new MutableLiveData<>();
 
     // ShipHandler instance
     private ShipHandler shipHandler = null;
@@ -42,6 +44,7 @@ public class ShipViewModel extends ViewModel implements ShipCallback {
         speedKm.setValue(0.0);
         angle.setValue(0.0);
         connected.setValue(false);
+        calibrating.setValue(false);
     }
 
     public LiveData<Boolean> getConnected() {
@@ -85,6 +88,8 @@ public class ShipViewModel extends ViewModel implements ShipCallback {
     public LiveData<String> getCurrentSteering() {
         return currentSteering;
     }
+
+    public LiveData<Boolean> getCalibrating() { return calibrating; }
 
     public void connect(final String broker, final String username, final String password) throws Exception {
         shipHandler = new ShipHandler(broker, username, password, this);
@@ -146,6 +151,10 @@ public class ShipViewModel extends ViewModel implements ShipCallback {
         lastError.postValue(exception);
     }
     // end of ShipCallback implementation
+
+    public void setCalibrating(boolean calibrating) {
+        this.calibrating.postValue(calibrating);
+    }
 
     @Override
     protected void onCleared() {

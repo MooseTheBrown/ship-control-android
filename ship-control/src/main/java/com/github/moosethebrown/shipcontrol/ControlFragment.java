@@ -138,6 +138,23 @@ public class ControlFragment extends Fragment {
             }
         });
 
+        // calibrate button
+        Button calibrateButton = view.findViewById(R.id.calibrationButton);
+        calibrateButton.setOnClickListener(v -> {
+            ShipViewModel viewModel = ViewModelProviders.of(getActivity()).get(ShipViewModel.class);
+            if (shipControl == null) {
+                return;
+            }
+
+            if (Boolean.FALSE.equals(viewModel.getCalibrating().getValue())) {
+                shipControl.startCalibration();
+                viewModel.setCalibrating(true);
+            } else {
+                shipControl.stopCalibration();
+                viewModel.setCalibrating(false);
+            }
+        });
+
         return view;
     }
 
@@ -175,6 +192,11 @@ public class ControlFragment extends Fragment {
         final Double angle = viewModel.getAngle().getValue();
         setAngle(angle);
         viewModel.getAngle().observe(this, this::setAngle);
+
+        setCalibrationButtonText();
+        viewModel.getCalibrating().observe(this, calibrating -> {
+           setCalibrationButtonText();
+        });
 
         // start periodic queries
         startQueryTimer();
@@ -322,5 +344,20 @@ public class ControlFragment extends Fragment {
         BigDecimal bigDecimal = BigDecimal.valueOf(value);
         bigDecimal = bigDecimal.setScale(precision, RoundingMode.HALF_UP);
         return bigDecimal.doubleValue();
+    }
+
+    private void setCalibrationButtonText() {
+        ShipViewModel viewModel = ViewModelProviders.of(getActivity()).get(ShipViewModel.class);
+        View view = getView();
+        if (view == null) {
+            return;
+        }
+
+        Button calibrationButton = view.findViewById(R.id.calibrationButton);
+        if (Boolean.FALSE.equals(viewModel.getCalibrating().getValue())) {
+            calibrationButton.setText(R.string.startCalibration);
+        } else {
+            calibrationButton.setText(R.string.stopCalibration);
+        }
     }
 }
