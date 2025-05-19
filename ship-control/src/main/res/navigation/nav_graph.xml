@@ -71,5 +71,5 @@
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.github.moosethebrown.shipcontrol.MapFragment"
-        android:label="MapFragment" />
+        android:label="@string/mapTitle" />
 </navigation>
