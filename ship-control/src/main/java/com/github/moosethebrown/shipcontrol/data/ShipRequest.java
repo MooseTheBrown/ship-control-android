@@ -15,6 +15,14 @@ public class ShipRequest {
     public static final String CMD_TURN_RIGHT = "turn_right";
     public static final String CMD_SET_SPEED = "set_speed";
     public static final String CMD_SET_STEERING = "set_steering";
+    public static final String CMD_SET_WAYPOINTS = "set_waypoints";
+    public static final String CMD_ADD_WAYPOINT = "add_waypoint";
+    public static final String CMD_CLEAR_WAYPOINTS= "clear_waypoints";
+    public static final String CMD_SET_HOME_WAYPOINT = "set_home_waypoint";
+    public static final String CMD_NAV_START = "nav_start";
+    public static final String CMD_NET_LOSS = "net_loss";
+    public static final String CMD_START_CALIBRATION = "start_calibration";
+    public static final String CMD_STOP_CALIBRATION = "stop_calibration";
 
     private final String type;
     private final String cmd;

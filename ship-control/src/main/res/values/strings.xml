@@ -36,4 +36,7 @@
     <string name="knots">kt</string>
     <string name="degrees">°</string>
     <string name="map">map</string>
+    <string name="mapTitle">Map</string>
+    <string name="startCalibration">calibrate</string>
+    <string name="stopCalibration">stop calibr.</string>
 </resources>

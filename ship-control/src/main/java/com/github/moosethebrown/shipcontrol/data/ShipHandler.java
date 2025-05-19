@@ -125,6 +125,16 @@ public class ShipHandler implements ShipControl {
         setSteering(strSteering);
     }
 
+    public void startCalibration() throws IllegalStateException {
+        ShipRequest rq = new ShipRequest(ShipRequest.TYPE_CMD, ShipRequest.CMD_START_CALIBRATION, "");
+        workerQueue.add(new ShipWorkerCommand(ShipWorkerCommand.CMD_REQUEST, rq));
+    }
+
+    public void stopCalibration() throws IllegalStateException {
+        ShipRequest rq = new ShipRequest(ShipRequest.TYPE_CMD, ShipRequest.CMD_STOP_CALIBRATION, "");
+        workerQueue.add(new ShipWorkerCommand(ShipWorkerCommand.CMD_REQUEST, rq));
+    }
+
     public void query() throws IllegalStateException {
         ShipRequest rq = new ShipRequest(ShipRequest.TYPE_QUERY, "", "");
         workerQueue.add(new ShipWorkerCommand(ShipWorkerCommand.CMD_REQUEST, rq));
