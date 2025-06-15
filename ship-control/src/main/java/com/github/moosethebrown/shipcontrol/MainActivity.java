@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity
 
         viewModel = ViewModelProviders.of(this).get(ShipViewModel.class);
 
+        initControllerHandler();
+
         setContentView(R.layout.activity_main);
 
         setupNavigationUI();
@@ -90,9 +92,7 @@ public class MainActivity extends AppCompatActivity
     public void onConnected(boolean already) {
         NavController controller = Navigation.findNavController(this, R.id.nav_host_fragment);
 
-        boolean useTwoJoysticks = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(PREFS_USE_TWO_JOYSTICKS_KEY, true);
-        Log.d(LOG_TAG, "initializing controller handler, useTwoJoysticks = " + useTwoJoysticks);
-        controllerHandler = new ControllerHandler(viewModel.getShipControl(), true);
+        initControllerHandler();
 
         // connected to broker, navigate to ship selection
         if (already) {
@@ -268,5 +268,25 @@ public class MainActivity extends AppCompatActivity
             }
         });
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
+    }
+
+    private void initControllerHandler() {
+        if (viewModel == null) {
+            Log.i(LOG_TAG, "initControllerHandler, viewModel is null");
+            return;
+        }
+        if (controllerHandler != null) {
+            Log.i(LOG_TAG, "initControllerHandler, controllerHandler is not null");
+            return;
+        }
+        if (Boolean.FALSE.equals(viewModel.getConnected().getValue())) {
+            Log.i(LOG_TAG, "initControllerHandler, not connected to broker");
+            return;
+        }
+
+        boolean useTwoJoysticks = PreferenceManager.getDefaultSharedPreferences(this).
+                getBoolean(PREFS_USE_TWO_JOYSTICKS_KEY, true);
+        Log.i(LOG_TAG, "initializing controller handler, useTwoJoysticks = " + useTwoJoysticks);
+        controllerHandler = new ControllerHandler(viewModel.getShipControl(), true);
     }
 }
