@@ -39,4 +39,6 @@
     <string name="mapTitle">Map</string>
     <string name="startCalibration">calibrate</string>
     <string name="stopCalibration">stop calibr.</string>
+    <string name="maxJoystickSpeed">Maximum joystick speed (1 - 10)</string>
+    <string name="maxJoystickSpeedError">Max joystick speed must be between 1 and 10</string>
 </resources>

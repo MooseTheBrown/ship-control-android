@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity
     private static final String PREFS_BROKER_PASSWORD_KEY = "brokerPassword";
     private static final String PREFS_QUERY_TIMEOUT_KEY = "queryTimeout";
     private static final String PREFS_USE_TWO_JOYSTICKS_KEY = "controllerTwoJoysticks";
+    private static final String PREFS_MAX_JOYSTICK_SPEED_KEY = "maxJoystickSpeed";
     private static final String PREFS_VIDEO_STREAM_URI_KEY = "videoStreamUri";
 
     private ShipViewModel viewModel = null;
@@ -194,7 +195,14 @@ public class MainActivity extends AppCompatActivity
         else if (key.equals(PREFS_USE_TWO_JOYSTICKS_KEY)) {
             boolean useTwoJoysticks = prefs.getBoolean(PREFS_USE_TWO_JOYSTICKS_KEY, true);
             Log.d(LOG_TAG, "useTwoJoysticks changed, reinitializing controllerHandler, new value: " + useTwoJoysticks);
-            controllerHandler = new ControllerHandler(viewModel.getShipControl(), useTwoJoysticks);
+            controllerHandler = new ControllerHandler(viewModel.getShipControl(), useTwoJoysticks,
+                    prefs.getInt(PREFS_MAX_JOYSTICK_SPEED_KEY, 10));
+        }
+        else if (key.equals(PREFS_MAX_JOYSTICK_SPEED_KEY)) {
+            int maxJoystickSpeed = prefs.getInt(PREFS_MAX_JOYSTICK_SPEED_KEY, 10);
+            Log.d(LOG_TAG, "maxJoystickSpeed changed, reinitializing controllerHandler, new value: " + maxJoystickSpeed);
+            controllerHandler = new ControllerHandler(viewModel.getShipControl(),
+                    prefs.getBoolean(PREFS_USE_TWO_JOYSTICKS_KEY, true), maxJoystickSpeed);
         }
     }
 
@@ -286,7 +294,10 @@ public class MainActivity extends AppCompatActivity
 
         boolean useTwoJoysticks = PreferenceManager.getDefaultSharedPreferences(this).
                 getBoolean(PREFS_USE_TWO_JOYSTICKS_KEY, true);
-        Log.i(LOG_TAG, "initializing controller handler, useTwoJoysticks = " + useTwoJoysticks);
-        controllerHandler = new ControllerHandler(viewModel.getShipControl(), true);
+        int maxJoystickSpeed = PreferenceManager.getDefaultSharedPreferences(this).
+                getInt(PREFS_MAX_JOYSTICK_SPEED_KEY, 10);
+        Log.i(LOG_TAG, "initializing controller handler, useTwoJoysticks = " + useTwoJoysticks +
+                ", maxJoystickSpeed = " + maxJoystickSpeed);
+        controllerHandler = new ControllerHandler(viewModel.getShipControl(), useTwoJoysticks, maxJoystickSpeed);
     }
 }

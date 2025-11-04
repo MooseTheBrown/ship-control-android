@@ -40,4 +40,6 @@
     <string name="mapTitle">Карта</string>
     <string name="startCalibration">калибровать</string>
     <string name="stopCalibration">ост. калибр.</string>
+    <string name="maxJoystickSpeed">Максимальная скорость от джойстика (1 - 10)</string>
+    <string name="maxJoystickSpeedError">Максимальная скорость от джойстика должна быть в диапазоне от 1 до 10</string>
 </resources>

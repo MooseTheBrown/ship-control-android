@@ -38,6 +38,15 @@
             android:defaultValue="true"
             android:key="controllerTwoJoysticks"
             android:title="@string/useTwoJoysticks" />
+        <EditTextPreference
+            android:id="@+id/maxJoystickSpeed"
+            android:defaultValue="10"
+            android:key="maxJoystickSpeed"
+            android:inputType="number"
+            android:digits="0123456789"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/maxJoystickSpeed"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/videoSettings">
         <EditTextPreference

@@ -11,10 +11,12 @@ public class ControllerHandler {
     private static final String LOG_TAG = "ControllerHandler";
     private final ShipControl shipControl;
     private final boolean useTwoJoysticks;
+    private final int maxJoystickSpeed;
 
-    public ControllerHandler(final ShipControl shipControl, boolean useTwoJoysticks) {
+    public ControllerHandler(final ShipControl shipControl, boolean useTwoJoysticks, int maxJoystickSpeed) {
         this.shipControl = shipControl;
         this.useTwoJoysticks = useTwoJoysticks;
+        this.maxJoystickSpeed = maxJoystickSpeed;
     }
 
     public boolean handleMotionEvent(MotionEvent event) {
@@ -65,6 +67,9 @@ public class ControllerHandler {
             float max = inputDevice.getMotionRange(MotionEvent.AXIS_Y, event.getSource()).getMax();
             Log.d(LOG_TAG, "y = " + y + ", max = " + max);
             int speed = (int)(((y * 10) / max) + 0.5);
+            if (speed > maxJoystickSpeed) {
+                speed = maxJoystickSpeed;
+            }
             Log.d(LOG_TAG, "setting speed to " + speed);
             shipControl.setSpeed(speed);
         }
@@ -72,6 +77,9 @@ public class ControllerHandler {
             float min = inputDevice.getMotionRange(MotionEvent.AXIS_Y, event.getSource()).getMin();
             Log.d(LOG_TAG, "y = " + y + ", min = " + min);
             int speed = (int)(((y * 10) / Math.abs(min)) - 0.5);
+            if (speed < -maxJoystickSpeed) {
+                speed = -maxJoystickSpeed;
+            }
             Log.d(LOG_TAG, "setting speed to " + speed);
             shipControl.setSpeed(speed);
         }
