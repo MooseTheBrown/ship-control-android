@@ -195,11 +195,24 @@ public class MainActivity extends AppCompatActivity
         else if (key.equals(PREFS_USE_TWO_JOYSTICKS_KEY)) {
             boolean useTwoJoysticks = prefs.getBoolean(PREFS_USE_TWO_JOYSTICKS_KEY, true);
             Log.d(LOG_TAG, "useTwoJoysticks changed, reinitializing controllerHandler, new value: " + useTwoJoysticks);
+            int maxJoystickSpeed = 10;
+            try {
+                maxJoystickSpeed = Integer.parseInt(prefs.getString(PREFS_MAX_JOYSTICK_SPEED_KEY, "10"));
+            }
+            catch (NumberFormatException e) {
+                Log.e(LOG_TAG, "Cannot parse maxJoystickSpeed preference value: " + e.getMessage());
+            }
             controllerHandler = new ControllerHandler(viewModel.getShipControl(), useTwoJoysticks,
-                    prefs.getInt(PREFS_MAX_JOYSTICK_SPEED_KEY, 10));
+                    maxJoystickSpeed);
         }
         else if (key.equals(PREFS_MAX_JOYSTICK_SPEED_KEY)) {
-            int maxJoystickSpeed = prefs.getInt(PREFS_MAX_JOYSTICK_SPEED_KEY, 10);
+            int maxJoystickSpeed = 10;
+            try {
+                maxJoystickSpeed = Integer.parseInt(prefs.getString(PREFS_MAX_JOYSTICK_SPEED_KEY, "10"));
+            }
+            catch (NumberFormatException e) {
+                Log.e(LOG_TAG, "Cannot parse maxJoystickSpeed preference value: " + e.getMessage());
+            }
             Log.d(LOG_TAG, "maxJoystickSpeed changed, reinitializing controllerHandler, new value: " + maxJoystickSpeed);
             controllerHandler = new ControllerHandler(viewModel.getShipControl(),
                     prefs.getBoolean(PREFS_USE_TWO_JOYSTICKS_KEY, true), maxJoystickSpeed);
@@ -294,8 +307,14 @@ public class MainActivity extends AppCompatActivity
 
         boolean useTwoJoysticks = PreferenceManager.getDefaultSharedPreferences(this).
                 getBoolean(PREFS_USE_TWO_JOYSTICKS_KEY, true);
-        int maxJoystickSpeed = PreferenceManager.getDefaultSharedPreferences(this).
-                getInt(PREFS_MAX_JOYSTICK_SPEED_KEY, 10);
+        int maxJoystickSpeed = 10;
+        try {
+            maxJoystickSpeed = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).
+                    getString(PREFS_MAX_JOYSTICK_SPEED_KEY, "10"));
+        }
+        catch (NumberFormatException e) {
+            Log.e(LOG_TAG, "Cannot parse maxJoystickSpeed preference value: " + e.getMessage());
+        }
         Log.i(LOG_TAG, "initializing controller handler, useTwoJoysticks = " + useTwoJoysticks +
                 ", maxJoystickSpeed = " + maxJoystickSpeed);
         controllerHandler = new ControllerHandler(viewModel.getShipControl(), useTwoJoysticks, maxJoystickSpeed);
